@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAM_ID.com.example.recipelite",
+        "paths": ["/auth/*", "/confirmed*", "/reset-password*"]
+      }
+    ]
+  }
+}
