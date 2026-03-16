@@ -1,38 +1,150 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RecipeLite - Email potvrdeny</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Helvetica,Arial,sans-serif;background-color:#FFF8F5;min-height:100vh;display:flex;align-items:center;justify-content:center}
-.card{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);max-width:440px;width:90%;text-align:center;overflow:hidden}
-.header{background-color:#FFF8F5;padding:24px 32px 16px}
-.header img{max-width:280px;height:auto}
-.body{padding:32px 36px 40px}
-.icon{width:64px;height:64px;background-color:#E8F5E9;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px;color:#2E7D32}
-h1{font-size:22px;color:#4E342E;font-weight:700;margin-bottom:12px}
-p{font-size:15px;line-height:1.6;color:#5D4037;margin-bottom:8px}
-.subtle{font-size:13px;color:#A89688}
-.footer{padding:16px 36px;background-color:#FFF8F5;border-top:1px solid #F0E6DC}
-.footer p{font-size:11px;color:#A89688;margin:0}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeLite</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', Helvetica, Arial, sans-serif;
+      background-color: #FFF8F5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      max-width: 440px;
+      width: 90%;
+      text-align: center;
+      overflow: hidden;
+    }
+    .header {
+      background-color: #FFF8F5;
+      padding: 24px 32px 16px;
+      position: relative;
+    }
+    .header img {
+      max-width: 280px;
+      height: auto;
+    }
+    .lang-toggle {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid #E0D6CC;
+    }
+    .lang-btn {
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #A89688;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: #FF8C00;
+      color: #FFFFFF;
+    }
+    .body {
+      padding: 32px 36px 40px;
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      background-color: #E8F5E9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 32px;
+    }
+    h1 {
+      font-size: 22px;
+      color: #4E342E;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #5D4037;
+      margin-bottom: 8px;
+    }
+    .footer {
+      padding: 16px 36px;
+      background-color: #FFF8F5;
+      border-top: 1px solid #F0E6DC;
+    }
+    .footer p {
+      font-size: 11px;
+      color: #A89688;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-<div class="card">
-<div class="header">
-<img src="https://bqxckmtnlzvftnanumsh.supabase.co/storage/v1/object/public/assets/recipelite_logo_email.png" alt="RecipeLite">
-</div>
-<div class="body">
-<div class="icon">&#10003;</div>
-<h1>Email bol potvrdeny!</h1>
-<p>Vas ucet je aktivny. Teraz sa mozete prihlasit v aplikacii RecipeLite.</p>
-<p class="subtle">Your email has been confirmed. You can now sign in to the RecipeLite app.</p>
-</div>
-<div class="footer">
-<p>RecipeLite &copy; 2025</p>
-</div>
-</div>
+  <div class="card">
+    <div class="header">
+      <div class="lang-toggle">
+        <button class="lang-btn" data-lang="sk" onclick="setLang('sk')">SK</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+      <img src="https://bqxckmtnlzvftnanumsh.supabase.co/storage/v1/object/public/assets/recipelite_logo_email.png" alt="RecipeLite">
+    </div>
+    <div class="body">
+      <div class="icon">&#10003;</div>
+      <h1 data-i18n="title"></h1>
+      <p data-i18n="description"></p>
+    </div>
+    <div class="footer">
+      <p>RecipeLite &copy; 2025</p>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      sk: {
+        title: 'Email bol potvrdený!',
+        description: 'Váš účet je aktívny. Teraz sa môžete prihlásiť v aplikácii RecipeLite.',
+        pageTitle: 'RecipeLite — Email potvrdený'
+      },
+      en: {
+        title: 'Email confirmed!',
+        description: 'Your account is active. You can now sign in to the RecipeLite app.',
+        pageTitle: 'RecipeLite — Email confirmed'
+      }
+    };
+
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      document.title = translations[lang].pageTitle;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) el.textContent = translations[lang][key];
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      localStorage.setItem('recipelite-lang', lang);
+    }
+
+    // Detect language: localStorage > browser > default sk
+    const saved = localStorage.getItem('recipelite-lang');
+    const browserLang = navigator.language.startsWith('sk') ? 'sk' : 'en';
+    setLang(saved || browserLang);
+  </script>
 </body>
 </html>
