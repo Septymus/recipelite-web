@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeLite — Podmienky používania</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', Helvetica, Arial, sans-serif;
+      background-color: #FFF8F5;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 0;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      max-width: 720px;
+      width: 90%;
+      overflow: hidden;
+    }
+    .header {
+      background-color: #FFF8F5;
+      padding: 24px 32px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .header img {
+      max-width: 280px;
+      height: auto;
+    }
+    .lang-toggle {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid #E0D6CC;
+    }
+    .lang-btn {
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #A89688;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: #FF8C00;
+      color: #FFFFFF;
+    }
+    .body {
+      padding: 32px 36px 40px;
+    }
+    h1 {
+      font-size: 22px;
+      color: #4E342E;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .last-updated {
+      font-size: 12px;
+      color: #A89688;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    h2 {
+      font-size: 17px;
+      color: #4E342E;
+      font-weight: 700;
+      margin: 24px 0 8px;
+    }
+    p, li {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #5D4037;
+      margin-bottom: 8px;
+    }
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    li { margin-bottom: 4px; }
+    a {
+      color: #FF8C00;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    .highlight {
+      background: #FFF3E0;
+      border-left: 3px solid #FF8C00;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .highlight p { margin-bottom: 0; }
+    .footer {
+      padding: 16px 36px;
+      background-color: #FFF8F5;
+      border-top: 1px solid #F0E6DC;
+      text-align: center;
+    }
+    .footer p {
+      font-size: 11px;
+      color: #A89688;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="lang-toggle">
+        <button class="lang-btn" data-lang="sk" onclick="setLang('sk')">SK</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+      <img src="https://bqxckmtnlzvftnanumsh.supabase.co/storage/v1/object/public/assets/recipelite_logo_email.png" alt="RecipeLite">
+    </div>
+    <div class="body" id="content-sk">
+      <h1>Podmienky používania</h1>
+      <p class="last-updated">Posledná aktualizácia: 18. marca 2026</p>
+
+      <p>Používaním mobilnej aplikácie <strong>RecipeLite</strong> (ďalej „aplikácia") súhlasíte s nasledujúcimi podmienkami. Ak s nimi nesúhlasíte, aplikáciu nepoužívajte.</p>
+
+      <h2>1. Popis služby</h2>
+      <p>RecipeLite je mobilná aplikácia na ukladanie, vytváranie, importovanie a zdieľanie receptov. Aplikácia umožňuje:</p>
+      <ul>
+        <li>Vytváranie a správu receptov (ingrediencie, postup, fotky)</li>
+        <li>Import receptov z webových stránok pomocou AI</li>
+        <li>Nákupné zoznamy</li>
+        <li>Sledovanie ostatných používateľov</li>
+        <li>Vytváranie domácností na zdieľanie receptov</li>
+        <li>Označovanie obľúbených receptov</li>
+      </ul>
+
+      <h2>2. Registrácia a účet</h2>
+      <ul>
+        <li>Na používanie aplikácie je potrebná registrácia s platnou emailovou adresou.</li>
+        <li>Ste zodpovední za bezpečnosť svojho hesla a účtu.</li>
+        <li>Heslo musí mať minimálne 8 znakov, obsahovať veľké písmeno a číslo.</li>
+        <li>Každý používateľ dostane jedinečné meno vo formáte <strong>meno#1234</strong>.</li>
+        <li>Používateľské mená nesmú obsahovať vulgárne alebo urážlivé výrazy.</li>
+        <li>Účet môžete kedykoľvek zmazať v nastaveniach profilu. Zmazanie je okamžité a nenávratné.</li>
+      </ul>
+
+      <h2>3. Obsah používateľov</h2>
+      <ul>
+        <li>Za obsah, ktorý vytvárate (recepty, fotky, popis), nesiete plnú zodpovednosť.</li>
+        <li>Nesmiete zverejňovať obsah, ktorý porušuje autorské práva, je urážlivý, nelegálny alebo škodlivý.</li>
+        <li>Verejné recepty sú viditeľné pre všetkých používateľov aplikácie.</li>
+        <li>Vyhradzujeme si právo odstrániť obsah, ktorý porušuje tieto podmienky.</li>
+      </ul>
+
+      <h2>4. AI Import receptov</h2>
+      <ul>
+        <li>Funkcia importu používa AI na extrahovanie receptov z URL adries.</li>
+        <li>Importované recepty sú automaticky generované a môžu obsahovať nepresnosti — vždy skontrolujte výsledok.</li>
+        <li>Import receptov z webových stránok je určený len na osobné použitie.</li>
+        <li>Nenesieme zodpovednosť za presnosť AI-importovaného obsahu.</li>
+      </ul>
+
+      <h2>5. Domácnosti</h2>
+      <ul>
+        <li>Správca domácnosti môže pridávať a odstraňovať členov a priraďovať recepty.</li>
+        <li>Členovia domácnosti vidia priradené recepty a zdieľané nákupné zoznamy.</li>
+        <li>Správca nesie zodpovednosť za správu členov svojej domácnosti.</li>
+      </ul>
+
+      <h2>6. Zakázané správanie</h2>
+      <p>Nesmiete:</p>
+      <ul>
+        <li>Pokúšať sa o neoprávnený prístup k účtom iných používateľov</li>
+        <li>Zneužívať AI import na masové sťahovanie obsahu</li>
+        <li>Vytvárať falošné účty alebo automatizovane spamovať</li>
+        <li>Obchádzať bezpečnostné opatrenia aplikácie</li>
+        <li>Používať aplikáciu na akékoľvek nezákonné účely</li>
+      </ul>
+
+      <h2>7. Dostupnosť služby</h2>
+      <ul>
+        <li>Aplikácia je poskytovaná „tak ako je" bez záruky nepretržitej dostupnosti.</li>
+        <li>Vyhradzujeme si právo na údržbu, aktualizácie a dočasné výpadky.</li>
+        <li>Nenesieme zodpovednosť za stratu dát spôsobenú technickými problémami — odporúčame pravidelný export dát.</li>
+      </ul>
+
+      <h2>8. Obmedzenie zodpovednosti</h2>
+      <p>V maximálnom rozsahu povolenom zákonom nenesieme zodpovednosť za:</p>
+      <ul>
+        <li>Nepriame, náhodné alebo následné škody vzniknuté používaním aplikácie</li>
+        <li>Presnosť obsahu vytvoreného alebo importovaného používateľmi</li>
+        <li>Stratu dát, pokiaľ nie je spôsobená naším úmyselným konaním</li>
+      </ul>
+
+      <h2>9. Ochrana osobných údajov</h2>
+      <p>Spracovanie osobných údajov sa riadi našimi <a href="https://recipelite.sk/privacy">Zásadami ochrany osobných údajov</a>, ktoré sú neoddeliteľnou súčasťou týchto podmienok.</p>
+
+      <h2>10. Zmeny podmienok</h2>
+      <p>Podmienky môžeme aktualizovať. O významných zmenách vás budeme informovať prostredníctvom oznámenia v aplikácii. Pokračovaním v používaní aplikácie po zmene podmienok vyjadrujete súhlas s aktualizovanými podmienkami.</p>
+
+      <h2>11. Rozhodné právo</h2>
+      <p>Tieto podmienky sa riadia právnym poriadkom Slovenskej republiky. Prípadné spory budú riešené príslušnými súdmi Slovenskej republiky.</p>
+
+      <h2>12. Kontakt</h2>
+      <div class="highlight">
+        <p>Ak máte otázky ohľadom týchto podmienok, kontaktujte nás na <a href="mailto:support@recipelite.sk">support@recipelite.sk</a>.</p>
+      </div>
+    </div>
+
+    <!-- English version -->
+    <div class="body" id="content-en" style="display:none">
+      <h1>Terms of Service</h1>
+      <p class="last-updated">Last updated: March 18, 2026</p>
+
+      <p>By using the mobile application <strong>RecipeLite</strong> (hereinafter "app"), you agree to the following terms. If you do not agree, do not use the app.</p>
+
+      <h2>1. Service Description</h2>
+      <p>RecipeLite is a mobile application for saving, creating, importing, and sharing recipes. The app allows you to:</p>
+      <ul>
+        <li>Create and manage recipes (ingredients, steps, photos)</li>
+        <li>Import recipes from websites using AI</li>
+        <li>Shopping lists</li>
+        <li>Follow other users</li>
+        <li>Create households for sharing recipes</li>
+        <li>Bookmark favorite recipes</li>
+      </ul>
+
+      <h2>2. Registration and Account</h2>
+      <ul>
+        <li>Registration with a valid email address is required to use the app.</li>
+        <li>You are responsible for the security of your password and account.</li>
+        <li>Password must be at least 8 characters long and contain an uppercase letter and a number.</li>
+        <li>Each user receives a unique name in the format <strong>name#1234</strong>.</li>
+        <li>Usernames must not contain vulgar or offensive expressions.</li>
+        <li>You can delete your account at any time in profile settings. Deletion is immediate and irreversible.</li>
+      </ul>
+
+      <h2>3. User Content</h2>
+      <ul>
+        <li>You are solely responsible for content you create (recipes, photos, descriptions).</li>
+        <li>You must not publish content that infringes copyrights, is offensive, illegal, or harmful.</li>
+        <li>Public recipes are visible to all app users.</li>
+        <li>We reserve the right to remove content that violates these terms.</li>
+      </ul>
+
+      <h2>4. AI Recipe Import</h2>
+      <ul>
+        <li>The import feature uses AI to extract recipes from URLs.</li>
+        <li>Imported recipes are automatically generated and may contain inaccuracies — always review the result.</li>
+        <li>Importing recipes from websites is intended for personal use only.</li>
+        <li>We are not responsible for the accuracy of AI-imported content.</li>
+      </ul>
+
+      <h2>5. Households</h2>
+      <ul>
+        <li>The household admin can add and remove members and assign recipes.</li>
+        <li>Household members can see assigned recipes and shared shopping lists.</li>
+        <li>The admin is responsible for managing their household members.</li>
+      </ul>
+
+      <h2>6. Prohibited Conduct</h2>
+      <p>You must not:</p>
+      <ul>
+        <li>Attempt unauthorized access to other users' accounts</li>
+        <li>Abuse AI import for mass content downloading</li>
+        <li>Create fake accounts or engage in automated spamming</li>
+        <li>Circumvent the app's security measures</li>
+        <li>Use the app for any unlawful purposes</li>
+      </ul>
+
+      <h2>7. Service Availability</h2>
+      <ul>
+        <li>The app is provided "as is" without guarantee of uninterrupted availability.</li>
+        <li>We reserve the right to perform maintenance, updates, and temporary outages.</li>
+        <li>We are not responsible for data loss caused by technical issues — we recommend regular data exports.</li>
+      </ul>
+
+      <h2>8. Limitation of Liability</h2>
+      <p>To the maximum extent permitted by law, we are not liable for:</p>
+      <ul>
+        <li>Indirect, incidental, or consequential damages arising from use of the app</li>
+        <li>Accuracy of content created or imported by users</li>
+        <li>Data loss, unless caused by our intentional action</li>
+      </ul>
+
+      <h2>9. Privacy</h2>
+      <p>Processing of personal data is governed by our <a href="https://recipelite.sk/privacy">Privacy Policy</a>, which is an integral part of these terms.</p>
+
+      <h2>10. Changes to Terms</h2>
+      <p>We may update these terms. We will notify you of significant changes via an in-app notification. By continuing to use the app after changes, you express consent to the updated terms.</p>
+
+      <h2>11. Governing Law</h2>
+      <p>These terms are governed by the laws of the Slovak Republic. Any disputes shall be resolved by the competent courts of the Slovak Republic.</p>
+
+      <h2>12. Contact</h2>
+      <div class="highlight">
+        <p>If you have questions regarding these terms, contact us at <a href="mailto:support@recipelite.sk">support@recipelite.sk</a>.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>RecipeLite &copy; 2026</p>
+    </div>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      document.title = lang === 'sk'
+        ? 'RecipeLite — Podmienky používania'
+        : 'RecipeLite — Terms of Service';
+      document.getElementById('content-sk').style.display = lang === 'sk' ? 'block' : 'none';
+      document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      localStorage.setItem('recipelite-lang', lang);
+    }
+
+    const saved = localStorage.getItem('recipelite-lang');
+    const browserLang = navigator.language.startsWith('sk') ? 'sk' : 'en';
+    setLang(saved || browserLang);
+  </script>
+</body>
+</html>

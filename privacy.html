@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeLite — Zásady ochrany osobných údajov</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', Helvetica, Arial, sans-serif;
+      background-color: #FFF8F5;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 0;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      max-width: 720px;
+      width: 90%;
+      overflow: hidden;
+    }
+    .header {
+      background-color: #FFF8F5;
+      padding: 24px 32px 16px;
+      text-align: center;
+      position: relative;
+    }
+    .header img {
+      max-width: 280px;
+      height: auto;
+    }
+    .lang-toggle {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid #E0D6CC;
+    }
+    .lang-btn {
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #A89688;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: #FF8C00;
+      color: #FFFFFF;
+    }
+    .body {
+      padding: 32px 36px 40px;
+    }
+    h1 {
+      font-size: 22px;
+      color: #4E342E;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .last-updated {
+      font-size: 12px;
+      color: #A89688;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    h2 {
+      font-size: 17px;
+      color: #4E342E;
+      font-weight: 700;
+      margin: 24px 0 8px;
+    }
+    h3 {
+      font-size: 15px;
+      color: #4E342E;
+      font-weight: 700;
+      margin: 16px 0 6px;
+    }
+    p, li {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #5D4037;
+      margin-bottom: 8px;
+    }
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    li { margin-bottom: 4px; }
+    a {
+      color: #FF8C00;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    .highlight {
+      background: #FFF3E0;
+      border-left: 3px solid #FF8C00;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .highlight p { margin-bottom: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 12px;
+      border: 1px solid #E0D6CC;
+      color: #5D4037;
+    }
+    th {
+      background: #FFF8F5;
+      font-weight: 700;
+      color: #4E342E;
+    }
+    .footer {
+      padding: 16px 36px;
+      background-color: #FFF8F5;
+      border-top: 1px solid #F0E6DC;
+      text-align: center;
+    }
+    .footer p {
+      font-size: 11px;
+      color: #A89688;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="lang-toggle">
+        <button class="lang-btn" data-lang="sk" onclick="setLang('sk')">SK</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+      <img src="https://bqxckmtnlzvftnanumsh.supabase.co/storage/v1/object/public/assets/recipelite_logo_email.png" alt="RecipeLite">
+    </div>
+    <div class="body" id="content-sk">
+      <h1>Zásady ochrany osobných údajov</h1>
+      <p class="last-updated">Posledná aktualizácia: 18. marca 2026</p>
+
+      <p>Tieto zásady vysvetľujú, ako mobilná aplikácia <strong>RecipeLite</strong> (ďalej „aplikácia" alebo „my") zhromažďuje, používa a chráni vaše osobné údaje v súlade s Nariadením (EÚ) 2016/679 (GDPR) a zákonom č. 18/2018 Z. z. o ochrane osobných údajov.</p>
+
+      <h2>1. Prevádzkovateľ</h2>
+      <p>Prevádzkovateľom osobných údajov je:</p>
+      <div class="highlight">
+        <p><strong>RecipeLite</strong><br>
+        Email: <a href="mailto:support@recipelite.sk">support@recipelite.sk</a></p>
+      </div>
+
+      <h2>2. Aké údaje zhromažďujeme</h2>
+      <table>
+        <tr><th>Kategória</th><th>Údaje</th><th>Účel</th></tr>
+        <tr><td>Účet</td><td>Email, používateľské meno, heslo (hashované)</td><td>Registrácia a prihlásenie</td></tr>
+        <tr><td>Profil</td><td>Zobrazované meno, bio, profilová fotka</td><td>Personalizácia profilu</td></tr>
+        <tr><td>Obsah</td><td>Recepty (názov, popis, ingrediencie, postup, fotky), nákupné zoznamy</td><td>Hlavná funkcionalita aplikácie</td></tr>
+        <tr><td>Sociálne</td><td>Sledovania (follow), členstvo v domácnostiach, obľúbené recepty</td><td>Sociálne funkcie</td></tr>
+        <tr><td>Technické</td><td>Jazyk zariadenia (SK/EN)</td><td>Lokalizácia emailov</td></tr>
+      </table>
+      <p><strong>Nezhromažďujeme:</strong> polohu, kontakty, históriu prehliadania, analytické dáta tretích strán, ani žiadne údaje na reklamné účely.</p>
+
+      <h2>3. Právny základ spracovania</h2>
+      <ul>
+        <li><strong>Plnenie zmluvy</strong> (čl. 6 ods. 1 písm. b) GDPR) — spracovanie potrebné na poskytovanie služieb aplikácie (účet, recepty, nákupné zoznamy, domácnosti).</li>
+        <li><strong>Súhlas</strong> (čl. 6 ods. 1 písm. a) GDPR) — udelený pri registrácii zaškrtnutím súhlasu s podmienkami. Súhlas môžete kedykoľvek odvolať zmazaním účtu.</li>
+      </ul>
+
+      <h2>4. Sprostredkovatelia (procesory)</h2>
+      <p>Na poskytovanie služieb využívame nasledujúcich sprostredkovateľov:</p>
+      <table>
+        <tr><th>Sprostredkovateľ</th><th>Účel</th><th>Sídlo</th></tr>
+        <tr><td>Supabase Inc.</td><td>Backend, databáza, autentifikácia, úložisko súborov</td><td>USA (EU región pre dáta)</td></tr>
+        <tr><td>Resend Inc.</td><td>Odosielanie transakčných emailov (overenie účtu, reset hesla)</td><td>USA</td></tr>
+      </table>
+      <p>Oba sprostredkovatelia spĺňajú požiadavky GDPR a spracúvajú údaje na základe štandardných zmluvných doložiek (SCC).</p>
+
+      <h2>5. Medzinárodný prenos údajov</h2>
+      <p>Vaše údaje sa ukladajú na serveroch Supabase v regióne EÚ. Niektorí sprostredkovatelia majú sídlo v USA — prenos je zabezpečený štandardnými zmluvnými doložkami (SCC) podľa čl. 46 ods. 2 písm. c) GDPR.</p>
+
+      <h2>6. Doba uchovávania</h2>
+      <ul>
+        <li><strong>Aktívny účet:</strong> údaje uchovávame po celú dobu existencie vášho účtu.</li>
+        <li><strong>Zmazané recepty:</strong> presunuté do koša, po manuálnom trvalnom zmazaní sú nezvratne odstránené.</li>
+        <li><strong>Zmazaný účet:</strong> všetky údaje sú vymazané okamžite a nenávratne (kaskádové mazanie).</li>
+      </ul>
+
+      <h2>7. Vaše práva</h2>
+      <p>Podľa GDPR máte právo na:</p>
+      <ul>
+        <li><strong>Prístup</strong> — k vašim osobným údajom (export dát v Nastaveniach aplikácie).</li>
+        <li><strong>Opravu</strong> — úprava profilu a receptov priamo v aplikácii.</li>
+        <li><strong>Vymazanie</strong> — zmazanie účtu v Nastaveniach profilu (okamžité a nenávratné).</li>
+        <li><strong>Prenosnosť</strong> — export všetkých dát vo formáte JSON (Nastavenia → Export mojich dát).</li>
+        <li><strong>Odvolanie súhlasu</strong> — kedykoľvek zmazaním účtu.</li>
+        <li><strong>Podanie sťažnosti</strong> — na dozorný orgán (viď nižšie).</li>
+      </ul>
+
+      <h2>8. Deti</h2>
+      <p>Aplikácia nie je určená pre osoby mladšie ako 16 rokov. Vedome nezhromažďujeme údaje od detí. Ak zistíme, že sme zhromaždili údaje od osoby mladšej ako 16 rokov, účet bude zmazaný.</p>
+
+      <h2>9. Bezpečnosť</h2>
+      <p>Vaše údaje chránime pomocou:</p>
+      <ul>
+        <li>Šifrovania prenosu (HTTPS/TLS)</li>
+        <li>Hashovania hesiel (bcrypt)</li>
+        <li>Row-Level Security (RLS) politík v databáze</li>
+        <li>JWT autentifikácie s automatickou obnovou tokenov</li>
+      </ul>
+
+      <h2>10. Automatizované rozhodovanie a AI</h2>
+      <p>Aplikácia využíva AI (Claude od Anthropic) výhradne na import receptov z URL adries. AI spracováva len obsah webovej stránky s receptom — žiadne vaše osobné údaje nie sú odosielané do AI služby.</p>
+
+      <h2>11. Zmeny zásad</h2>
+      <p>O významných zmenách vás budeme informovať prostredníctvom oznámenia v aplikácii. Aktuálna verzia je vždy dostupná na <a href="https://recipelite.sk/privacy">recipelite.sk/privacy</a>.</p>
+
+      <h2>12. Dozorný orgán</h2>
+      <div class="highlight">
+        <p><strong>Úrad na ochranu osobných údajov Slovenskej republiky</strong><br>
+        Hraničná 12, 820 07 Bratislava 27<br>
+        Web: <a href="https://dataprotection.gov.sk" target="_blank" rel="noopener">dataprotection.gov.sk</a><br>
+        Email: statny.dozor@pdp.gov.sk</p>
+      </div>
+
+      <h2>13. Kontakt</h2>
+      <p>Ak máte otázky ohľadom spracovania vašich osobných údajov, kontaktujte nás na <a href="mailto:support@recipelite.sk">support@recipelite.sk</a>.</p>
+    </div>
+
+    <!-- English version -->
+    <div class="body" id="content-en" style="display:none">
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: March 18, 2026</p>
+
+      <p>This policy explains how the mobile application <strong>RecipeLite</strong> (hereinafter "app" or "we") collects, uses, and protects your personal data in accordance with Regulation (EU) 2016/679 (GDPR) and Slovak Act No. 18/2018 Coll. on Personal Data Protection.</p>
+
+      <h2>1. Data Controller</h2>
+      <p>The data controller is:</p>
+      <div class="highlight">
+        <p><strong>RecipeLite</strong><br>
+        Email: <a href="mailto:support@recipelite.sk">support@recipelite.sk</a></p>
+      </div>
+
+      <h2>2. What Data We Collect</h2>
+      <table>
+        <tr><th>Category</th><th>Data</th><th>Purpose</th></tr>
+        <tr><td>Account</td><td>Email, username, password (hashed)</td><td>Registration and login</td></tr>
+        <tr><td>Profile</td><td>Display name, bio, profile picture</td><td>Profile personalization</td></tr>
+        <tr><td>Content</td><td>Recipes (title, description, ingredients, steps, photos), shopping lists</td><td>Core app functionality</td></tr>
+        <tr><td>Social</td><td>Follows, household memberships, favorite recipes</td><td>Social features</td></tr>
+        <tr><td>Technical</td><td>Device language (SK/EN)</td><td>Email localization</td></tr>
+      </table>
+      <p><strong>We do not collect:</strong> location data, contacts, browsing history, third-party analytics, or any data for advertising purposes.</p>
+
+      <h2>3. Legal Basis for Processing</h2>
+      <ul>
+        <li><strong>Performance of a contract</strong> (Art. 6(1)(b) GDPR) — processing necessary to provide app services (account, recipes, shopping lists, households).</li>
+        <li><strong>Consent</strong> (Art. 6(1)(a) GDPR) — given during registration by accepting the terms. You can withdraw consent at any time by deleting your account.</li>
+      </ul>
+
+      <h2>4. Data Processors</h2>
+      <p>We use the following processors to provide our services:</p>
+      <table>
+        <tr><th>Processor</th><th>Purpose</th><th>Location</th></tr>
+        <tr><td>Supabase Inc.</td><td>Backend, database, authentication, file storage</td><td>USA (EU region for data)</td></tr>
+        <tr><td>Resend Inc.</td><td>Transactional emails (account verification, password reset)</td><td>USA</td></tr>
+      </table>
+      <p>Both processors comply with GDPR requirements and process data based on Standard Contractual Clauses (SCCs).</p>
+
+      <h2>5. International Data Transfers</h2>
+      <p>Your data is stored on Supabase servers in the EU region. Some processors are based in the USA — transfers are secured by Standard Contractual Clauses (SCCs) pursuant to Art. 46(2)(c) GDPR.</p>
+
+      <h2>6. Data Retention</h2>
+      <ul>
+        <li><strong>Active account:</strong> data is retained for the duration of your account.</li>
+        <li><strong>Deleted recipes:</strong> moved to trash; permanently deleted upon manual confirmation.</li>
+        <li><strong>Deleted account:</strong> all data is immediately and irreversibly deleted (cascade deletion).</li>
+      </ul>
+
+      <h2>7. Your Rights</h2>
+      <p>Under GDPR, you have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> — your personal data (data export in app Settings).</li>
+        <li><strong>Rectification</strong> — edit your profile and recipes directly in the app.</li>
+        <li><strong>Erasure</strong> — delete your account in Profile Settings (immediate and irreversible).</li>
+        <li><strong>Data portability</strong> — export all data in JSON format (Settings → Export my data).</li>
+        <li><strong>Withdraw consent</strong> — at any time by deleting your account.</li>
+        <li><strong>Lodge a complaint</strong> — with the supervisory authority (see below).</li>
+      </ul>
+
+      <h2>8. Children</h2>
+      <p>The app is not intended for persons under the age of 16. We do not knowingly collect data from children. If we discover that we have collected data from a person under 16, the account will be deleted.</p>
+
+      <h2>9. Security</h2>
+      <p>We protect your data through:</p>
+      <ul>
+        <li>Transport encryption (HTTPS/TLS)</li>
+        <li>Password hashing (bcrypt)</li>
+        <li>Row-Level Security (RLS) database policies</li>
+        <li>JWT authentication with automatic token refresh</li>
+      </ul>
+
+      <h2>10. Automated Decision-Making and AI</h2>
+      <p>The app uses AI (Claude by Anthropic) solely for importing recipes from URLs. The AI only processes the content of the recipe webpage — none of your personal data is sent to the AI service.</p>
+
+      <h2>11. Policy Changes</h2>
+      <p>We will notify you of significant changes via an in-app notification. The current version is always available at <a href="https://recipelite.sk/privacy">recipelite.sk/privacy</a>.</p>
+
+      <h2>12. Supervisory Authority</h2>
+      <div class="highlight">
+        <p><strong>Office for Personal Data Protection of the Slovak Republic</strong><br>
+        Hraničná 12, 820 07 Bratislava 27<br>
+        Web: <a href="https://dataprotection.gov.sk" target="_blank" rel="noopener">dataprotection.gov.sk</a><br>
+        Email: statny.dozor@pdp.gov.sk</p>
+      </div>
+
+      <h2>13. Contact</h2>
+      <p>If you have questions regarding the processing of your personal data, contact us at <a href="mailto:support@recipelite.sk">support@recipelite.sk</a>.</p>
+    </div>
+
+    <div class="footer">
+      <p>RecipeLite &copy; 2026</p>
+    </div>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      document.title = lang === 'sk'
+        ? 'RecipeLite — Zásady ochrany osobných údajov'
+        : 'RecipeLite — Privacy Policy';
+      document.getElementById('content-sk').style.display = lang === 'sk' ? 'block' : 'none';
+      document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      localStorage.setItem('recipelite-lang', lang);
+    }
+
+    const saved = localStorage.getItem('recipelite-lang');
+    const browserLang = navigator.language.startsWith('sk') ? 'sk' : 'en';
+    setLang(saved || browserLang);
+  </script>
+</body>
+</html>
