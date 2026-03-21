@@ -145,6 +145,11 @@
     const saved = localStorage.getItem('recipelite-lang');
     const browserLang = navigator.language.startsWith('sk') ? 'sk' : 'en';
     setLang(saved || browserLang);
+
+    // Try to open the app after a short delay (works on mobile, ignored on desktop)
+    setTimeout(function() {
+      window.location.href = 'recipelite://confirmed';
+    }, 1500);
   </script>
 </body>
 </html>
