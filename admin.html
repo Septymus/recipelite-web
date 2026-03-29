@@ -586,6 +586,7 @@
               ${isPending && !isHidden && !isDeleted ? `<button class="btn-action btn-hide" onclick="hideRecipe('${r.recipe_id}')">Hide Recipe</button>` : ''}
               ${isHidden && !isDeleted ? `<button class="btn-action btn-unhide" onclick="unhideRecipe('${r.recipe_id}')">Unhide Recipe</button>` : ''}
               ${!isDeleted ? `<button class="btn-action btn-delete" onclick="deleteRecipe('${r.recipe_id}', '${esc(r.recipe_title)}')">Delete Recipe</button>` : ''}
+              <button class="btn-action btn-dismiss" onclick="deleteReport('${r.report_id}')">Delete Report</button>
             </div>
           </div>
         `;
@@ -641,6 +642,16 @@
         const result = await safeRpc('admin_delete_recipe', { p_recipe_id: recipeId });
         if (result !== RPC_ERROR) {
           showToast('Recipe deleted');
+          await refreshReports();
+        }
+      });
+    };
+
+    window.deleteReport = function(reportId) {
+      openConfirm('Delete Report', 'This will permanently delete this report. Continue?', async () => {
+        const result = await safeRpc('admin_delete_report', { p_report_id: reportId });
+        if (result !== RPC_ERROR) {
+          showToast('Report deleted');
           await refreshReports();
         }
       });
