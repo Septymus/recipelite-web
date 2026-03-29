@@ -151,7 +151,7 @@
     </div>
     <div class="body" id="content-sk">
       <h1>Zásady ochrany osobných údajov</h1>
-      <p class="last-updated">Posledná aktualizácia: 18. marca 2026</p>
+      <p class="last-updated">Posledná aktualizácia: 29. marca 2026</p>
 
       <p>Tieto zásady vysvetľujú, ako mobilná aplikácia <strong>RecipeLite</strong> (ďalej „aplikácia" alebo „my") zhromažďuje, používa a chráni vaše osobné údaje v súlade s Nariadením (EÚ) 2016/679 (GDPR) a zákonom č. 18/2018 Z. z. o ochrane osobných údajov.</p>
 
@@ -159,7 +159,7 @@
       <p>Prevádzkovateľom osobných údajov je:</p>
       <div class="highlight">
         <p><strong>RecipeLite</strong><br>
-        Email: <a href="mailto:support@recipelite.sk">support@recipelite.sk</a></p>
+        Email: <a href="mailto:info@recipelite.sk">info@recipelite.sk</a></p>
       </div>
 
       <h2>2. Aké údaje zhromažďujeme</h2>
@@ -185,8 +185,9 @@
         <tr><th>Sprostredkovateľ</th><th>Účel</th><th>Sídlo</th></tr>
         <tr><td>Supabase Inc.</td><td>Backend, databáza, autentifikácia, úložisko súborov</td><td>USA (EU región pre dáta)</td></tr>
         <tr><td>Resend Inc.</td><td>Odosielanie transakčných emailov (overenie účtu, reset hesla)</td><td>USA</td></tr>
+        <tr><td>Anthropic PBC</td><td>AI spracovanie textu — import receptov z URL a extrakcia textu z fotografií (OCR)</td><td>USA</td></tr>
       </table>
-      <p>Oba sprostredkovatelia spĺňajú požiadavky GDPR a spracúvajú údaje na základe štandardných zmluvných doložiek (SCC).</p>
+      <p>Všetci sprostredkovatelia spĺňajú požiadavky GDPR a spracúvajú údaje na základe štandardných zmluvných doložiek (SCC).</p>
 
       <h2>5. Medzinárodný prenos údajov</h2>
       <p>Vaše údaje sa ukladajú na serveroch Supabase v regióne EÚ. Niektorí sprostredkovatelia majú sídlo v USA — prenos je zabezpečený štandardnými zmluvnými doložkami (SCC) podľa čl. 46 ods. 2 písm. c) GDPR.</p>
@@ -222,7 +223,12 @@
       </ul>
 
       <h2>10. Automatizované rozhodovanie a AI</h2>
-      <p>Aplikácia využíva AI (Claude od Anthropic) výhradne na import receptov z URL adries. AI spracováva len obsah webovej stránky s receptom — žiadne vaše osobné údaje nie sú odosielané do AI služby.</p>
+      <p>Aplikácia využíva AI službu Claude od spoločnosti Anthropic PBC na tieto účely:</p>
+      <ul>
+        <li><strong>Import receptov</strong> — extrakcia štruktúrovaného receptu z obsahu webovej stránky (URL adresa zadaná používateľom).</li>
+        <li><strong>OCR skenovanie</strong> — extrakcia textu z fotografií receptov (obrázok zvolený používateľom).</li>
+      </ul>
+      <p>Do AI služby sa odosielajú <strong>výlučne</strong> dáta potrebné na spracovanie (obsah webovej stránky alebo obrázok). Vaše osobné údaje (meno, email, profil) nie sú súčasťou týchto požiadaviek. Anthropic dáta neuchováva na tréningové účely a spracúva ich výlučne na účel poskytnutia odpovede.</p>
 
       <h2>11. Zmeny zásad</h2>
       <p>O významných zmenách vás budeme informovať prostredníctvom oznámenia v aplikácii. Aktuálna verzia je vždy dostupná na <a href="https://recipelite.sk/privacy">recipelite.sk/privacy</a>.</p>
@@ -236,13 +242,13 @@
       </div>
 
       <h2>13. Kontakt</h2>
-      <p>Ak máte otázky ohľadom spracovania vašich osobných údajov, kontaktujte nás na <a href="mailto:support@recipelite.sk">support@recipelite.sk</a>.</p>
+      <p>Ak máte otázky ohľadom spracovania vašich osobných údajov, kontaktujte nás na <a href="mailto:info@recipelite.sk">info@recipelite.sk</a>.</p>
     </div>
 
     <!-- English version -->
     <div class="body" id="content-en" style="display:none">
       <h1>Privacy Policy</h1>
-      <p class="last-updated">Last updated: March 18, 2026</p>
+      <p class="last-updated">Last updated: March 29, 2026</p>
 
       <p>This policy explains how the mobile application <strong>RecipeLite</strong> (hereinafter "app" or "we") collects, uses, and protects your personal data in accordance with Regulation (EU) 2016/679 (GDPR) and Slovak Act No. 18/2018 Coll. on Personal Data Protection.</p>
 
@@ -250,7 +256,7 @@
       <p>The data controller is:</p>
       <div class="highlight">
         <p><strong>RecipeLite</strong><br>
-        Email: <a href="mailto:support@recipelite.sk">support@recipelite.sk</a></p>
+        Email: <a href="mailto:info@recipelite.sk">info@recipelite.sk</a></p>
       </div>
 
       <h2>2. What Data We Collect</h2>
@@ -276,8 +282,9 @@
         <tr><th>Processor</th><th>Purpose</th><th>Location</th></tr>
         <tr><td>Supabase Inc.</td><td>Backend, database, authentication, file storage</td><td>USA (EU region for data)</td></tr>
         <tr><td>Resend Inc.</td><td>Transactional emails (account verification, password reset)</td><td>USA</td></tr>
+        <tr><td>Anthropic PBC</td><td>AI text processing — recipe import from URLs and text extraction from photos (OCR)</td><td>USA</td></tr>
       </table>
-      <p>Both processors comply with GDPR requirements and process data based on Standard Contractual Clauses (SCCs).</p>
+      <p>All processors comply with GDPR requirements and process data based on Standard Contractual Clauses (SCCs).</p>
 
       <h2>5. International Data Transfers</h2>
       <p>Your data is stored on Supabase servers in the EU region. Some processors are based in the USA — transfers are secured by Standard Contractual Clauses (SCCs) pursuant to Art. 46(2)(c) GDPR.</p>
@@ -313,7 +320,12 @@
       </ul>
 
       <h2>10. Automated Decision-Making and AI</h2>
-      <p>The app uses AI (Claude by Anthropic) solely for importing recipes from URLs. The AI only processes the content of the recipe webpage — none of your personal data is sent to the AI service.</p>
+      <p>The app uses the AI service Claude by Anthropic PBC for the following purposes:</p>
+      <ul>
+        <li><strong>Recipe import</strong> — extracting a structured recipe from a webpage's content (URL provided by the user).</li>
+        <li><strong>OCR scanning</strong> — extracting text from recipe photos (image selected by the user).</li>
+      </ul>
+      <p>Only data necessary for processing is sent to the AI service (webpage content or image). Your personal data (name, email, profile) is not included in these requests. Anthropic does not retain data for training purposes and processes it solely to provide the response.</p>
 
       <h2>11. Policy Changes</h2>
       <p>We will notify you of significant changes via an in-app notification. The current version is always available at <a href="https://recipelite.sk/privacy">recipelite.sk/privacy</a>.</p>
@@ -327,7 +339,7 @@
       </div>
 
       <h2>13. Contact</h2>
-      <p>If you have questions regarding the processing of your personal data, contact us at <a href="mailto:support@recipelite.sk">support@recipelite.sk</a>.</p>
+      <p>If you have questions regarding the processing of your personal data, contact us at <a href="mailto:info@recipelite.sk">info@recipelite.sk</a>.</p>
     </div>
 
     <div class="footer">

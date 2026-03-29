@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>RecipeLite — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', Helvetica, Arial, sans-serif;
+      background-color: #FFF8F5;
+      min-height: 100vh;
+      color: #4E342E;
+    }
+    .admin-header {
+      background: #fff;
+      border-bottom: 1px solid #F0E6DC;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .admin-header img { height: 36px; }
+    .admin-header-left { display: flex; align-items: center; gap: 12px; }
+    .admin-header h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #4E342E;
+    }
+    .admin-container {
+      max-width: 960px;
+      width: 94%;
+      margin: 24px auto;
+    }
+
+    /* States */
+    .state { display: none; }
+    .state.active { display: block; }
+
+    /* Login card */
+    .login-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .login-card img { max-width: 200px; margin-bottom: 24px; }
+    .login-card h2 { font-size: 20px; margin-bottom: 24px; color: #4E342E; }
+    .form-group { margin-bottom: 16px; text-align: left; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #5D4037;
+      margin-bottom: 4px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #E0D6CC;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      background: #FAFAFA;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #FF8C00;
+      background: #fff;
+    }
+    .error-text {
+      color: #CC3333;
+      font-size: 13px;
+      margin-bottom: 12px;
+      min-height: 18px;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #FF8C00;
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #E07B00; }
+    .btn-primary:disabled { background: #E0D6CC; cursor: not-allowed; }
+    .btn-logout {
+      padding: 6px 16px;
+      border: 1.5px solid #E0D6CC;
+      border-radius: 8px;
+      background: transparent;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: #5D4037;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { background: #FFF3E0; border-color: #FF8C00; }
+
+    /* Loading */
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid #E0D6CC;
+      border-top-color: #FF8C00;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 80px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      flex: 1;
+      min-width: 120px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      border-top: 3px solid #E0D6CC;
+    }
+    .stat-card.pending { border-top-color: #E6A817; }
+    .stat-card.actioned { border-top-color: #2E7D32; }
+    .stat-card.dismissed { border-top-color: #A89688; }
+    .stat-number { font-size: 24px; font-weight: 700; }
+    .stat-label { font-size: 12px; color: #A89688; font-weight: 600; }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1.5px solid #E0D6CC;
+      background: transparent;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: #5D4037;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-tab:hover { background: #FFF3E0; }
+    .filter-tab.active {
+      background: #FF8C00;
+      color: #fff;
+      border-color: #FF8C00;
+    }
+
+    /* Report cards */
+    .report-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .badge {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-pending { background: #FFF3E0; color: #E6A817; }
+    .badge-actioned { background: #E8F5E9; color: #2E7D32; }
+    .badge-dismissed { background: #F5F5F5; color: #A89688; }
+    .report-date { font-size: 12px; color: #A89688; }
+    .report-detail { font-size: 14px; line-height: 1.6; margin-bottom: 4px; color: #5D4037; }
+    .report-detail strong { color: #4E342E; }
+    .report-label { font-size: 12px; color: #A89688; font-weight: 600; }
+    .report-count { font-size: 12px; color: #CC3333; font-weight: 700; }
+    .report-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      padding: 7px 16px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all 0.2s;
+    }
+    .btn-dismiss {
+      background: #F5F5F5;
+      color: #5D4037;
+      border-color: #E0D6CC;
+    }
+    .btn-dismiss:hover { background: #EEEEEE; }
+    .btn-hide {
+      background: #CC3333;
+      color: #fff;
+    }
+    .btn-hide:hover { background: #B02929; }
+    .btn-unhide {
+      background: #2E7D32;
+      color: #fff;
+    }
+    .btn-unhide:hover { background: #256829; }
+    .btn-delete {
+      background: transparent;
+      color: #CC3333;
+      border-color: #CC3333;
+    }
+    .btn-delete:hover { background: #FDECEC; }
+    .btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #A89688;
+    }
+    .empty-state-icon { font-size: 48px; margin-bottom: 12px; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      z-index: 100;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      max-width: 360px;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-success { background: #2E7D32; }
+    .toast-error { background: #CC3333; }
+
+    /* Confirm dialog */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .modal-box h3 { font-size: 17px; margin-bottom: 8px; color: #4E342E; }
+    .modal-box p { font-size: 14px; color: #5D4037; margin-bottom: 20px; line-height: 1.5; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-cancel {
+      padding: 8px 20px;
+      border-radius: 10px;
+      border: 1.5px solid #E0D6CC;
+      background: transparent;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: #5D4037;
+      cursor: pointer;
+    }
+    .btn-confirm-danger {
+      padding: 8px 20px;
+      border-radius: 10px;
+      border: none;
+      background: #CC3333;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Access denied */
+    .access-denied {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .access-denied-icon { font-size: 56px; margin-bottom: 16px; }
+    .access-denied h2 { color: #CC3333; margin-bottom: 8px; }
+    .access-denied p { color: #5D4037; margin-bottom: 24px; }
+
+    /* Footer */
+    .admin-footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 11px;
+      color: #A89688;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <img src="https://bqxckmtnlzvftnanumsh.supabase.co/storage/v1/object/public/assets/recipelite_logo_email.png" alt="RecipeLite">
+      <h1>Admin Panel</h1>
+    </div>
+    <button class="btn-logout" id="btn-logout" style="display:none" onclick="handleLogout()">Logout</button>
+  </header>
+
+  <div class="admin-container">
+    <!-- Loading -->
+    <div id="state-loading" class="state active">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Login -->
+    <div id="state-login" class="state">
+      <div class="login-card">
+        <img src="https://bqxckmtnlzvftnanumsh.supabase.co/storage/v1/object/public/assets/recipelite_logo_email.png" alt="RecipeLite">
+        <h2>Admin Login</h2>
+        <form id="login-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required autocomplete="current-password">
+          </div>
+          <div class="error-text" id="login-error"></div>
+          <button type="submit" class="btn-primary" id="btn-login">Sign In</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Access denied -->
+    <div id="state-not-admin" class="state">
+      <div class="access-denied">
+        <div class="access-denied-icon">&#128683;</div>
+        <h2>Access Denied</h2>
+        <p>Your account does not have admin privileges.</p>
+        <button class="btn-primary" style="max-width:200px;margin:0 auto;" onclick="handleLogout()">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="state-dashboard" class="state">
+      <div class="stats-bar" id="stats-bar"></div>
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">All</button>
+        <button class="filter-tab" data-filter="pending" onclick="setFilter('pending')">Pending</button>
+        <button class="filter-tab" data-filter="actioned" onclick="setFilter('actioned')">Actioned</button>
+        <button class="filter-tab" data-filter="dismissed" onclick="setFilter('dismissed')">Dismissed</button>
+      </div>
+      <div id="reports-list"></div>
+      <div id="empty-state" class="empty-state" style="display:none">
+        <div class="empty-state-icon">&#9745;</div>
+        <p>No reports found.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm dialog -->
+  <div class="modal-overlay" id="confirm-dialog">
+    <div class="modal-box">
+      <h3 id="confirm-title"></h3>
+      <p id="confirm-message"></p>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+        <button class="btn-confirm-danger" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <footer class="admin-footer">RecipeLite &copy; 2026</footer>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const supabase = createClient(
+      'https://bqxckmtnlzvftnanumsh.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJxeGNrbXRubHp2ZnRuYW51bXNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NzkzNzIsImV4cCI6MjA4OTA1NTM3Mn0.vf1GTq3J6_GVoCDg4-fpYSuXWcmCqpobRzIxhKfEvgU'
+    );
+
+    let allReports = [];
+    let currentFilter = 'all';
+
+    // ---- State management ----
+    function showState(id) {
+      document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.getElementById('btn-logout').style.display =
+        (id === 'state-dashboard' || id === 'state-not-admin') ? '' : 'none';
+    }
+
+    // ---- Toast ----
+    function showToast(msg, type = 'success') {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = `toast toast-${type} show`;
+      setTimeout(() => el.classList.remove('show'), 4000);
+    }
+
+    // ---- Confirm dialog ----
+    let confirmCallback = null;
+    function openConfirm(title, message, callback) {
+      document.getElementById('confirm-title').textContent = title;
+      document.getElementById('confirm-message').textContent = message;
+      confirmCallback = callback;
+      document.getElementById('confirm-dialog').classList.add('open');
+    }
+    window.closeConfirm = function() {
+      document.getElementById('confirm-dialog').classList.remove('open');
+      confirmCallback = null;
+    };
+    document.getElementById('confirm-ok').addEventListener('click', async () => {
+      if (confirmCallback) {
+        document.getElementById('confirm-ok').disabled = true;
+        await confirmCallback();
+        document.getElementById('confirm-ok').disabled = false;
+      }
+      closeConfirm();
+    });
+
+    // ---- RPC helper ----
+    async function safeRpc(fn, params = {}) {
+      try {
+        const { data, error } = await supabase.rpc(fn, params);
+        if (error) {
+          if (error.message && error.message.includes('Unauthorized')) {
+            showState('state-not-admin');
+            return null;
+          }
+          showToast(error.message || 'Operation failed', 'error');
+          return null;
+        }
+        return data;
+      } catch (e) {
+        showToast('Connection error. Please try again.', 'error');
+        return null;
+      }
+    }
+
+    // ---- Auth ----
+    window.handleLogin = async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-login');
+      const errEl = document.getElementById('login-error');
+      errEl.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Signing in...';
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        errEl.textContent = error.message;
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+        return;
+      }
+      await checkAdminAndLoad();
+    };
+
+    window.handleLogout = async function() {
+      await supabase.auth.signOut();
+      allReports = [];
+      showState('state-login');
+    };
+
+    async function checkAdminAndLoad() {
+      showState('state-loading');
+      const data = await safeRpc('admin_get_reports');
+      if (data === null) return; // unauthorized or error — state already set
+      allReports = data;
+      renderDashboard();
+      showState('state-dashboard');
+    }
+
+    // ---- Dashboard rendering ----
+    function renderDashboard() {
+      renderStats();
+      renderReports();
+    }
+
+    function renderStats() {
+      const total = allReports.length;
+      const pending = allReports.filter(r => r.report_status === 'pending').length;
+      const actioned = allReports.filter(r => r.report_status === 'actioned').length;
+      const dismissed = allReports.filter(r => r.report_status === 'dismissed').length;
+
+      document.getElementById('stats-bar').innerHTML = `
+        <div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total</div></div>
+        <div class="stat-card pending"><div class="stat-number">${pending}</div><div class="stat-label">Pending</div></div>
+        <div class="stat-card actioned"><div class="stat-number">${actioned}</div><div class="stat-label">Actioned</div></div>
+        <div class="stat-card dismissed"><div class="stat-number">${dismissed}</div><div class="stat-label">Dismissed</div></div>
+      `;
+    }
+
+    function renderReports() {
+      const list = document.getElementById('reports-list');
+      const empty = document.getElementById('empty-state');
+      const filtered = currentFilter === 'all'
+        ? allReports
+        : allReports.filter(r => r.report_status === currentFilter);
+
+      if (filtered.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = '';
+        return;
+      }
+      empty.style.display = 'none';
+
+      const reasonLabels = {
+        inappropriate: 'Inappropriate content',
+        spam: 'Spam',
+        copyright: 'Copyright violation',
+        other: 'Other',
+      };
+
+      list.innerHTML = filtered.map(r => {
+        const badgeClass = `badge-${r.report_status}`;
+        const date = new Date(r.report_created_at).toLocaleDateString('sk-SK', {
+          day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        const isPending = r.report_status === 'pending';
+        const isHidden = r.recipe_is_hidden;
+        const isDeleted = r.recipe_deleted_at != null;
+
+        let statusExtra = '';
+        if (isDeleted) statusExtra = ' <span class="badge badge-actioned">Deleted</span>';
+        else if (isHidden) statusExtra = ' <span class="badge badge-pending">Hidden</span>';
+
+        return `
+          <div class="report-card" data-id="${r.report_id}">
+            <div class="report-header">
+              <div><span class="badge ${badgeClass}">${r.report_status}</span>${statusExtra}</div>
+              <span class="report-date">${date}</span>
+            </div>
+            <div class="report-detail"><strong>Recipe:</strong> ${esc(r.recipe_title)} ${r.report_count > 1 ? `<span class="report-count">(${r.report_count} reports)</span>` : ''}</div>
+            <div class="report-detail"><strong>Author:</strong> ${esc(r.author_name)}#${esc(r.author_discriminator)}</div>
+            <div class="report-detail"><strong>Reported by:</strong> ${esc(r.reporter_name)}#${esc(r.reporter_discriminator)}</div>
+            <div class="report-detail"><strong>Reason:</strong> ${reasonLabels[r.report_reason] || r.report_reason}</div>
+            ${r.report_description ? `<div class="report-detail"><span class="report-label">Description:</span> ${esc(r.report_description)}</div>` : ''}
+            <div class="report-actions">
+              ${isPending ? `<button class="btn-action btn-dismiss" onclick="dismissReport('${r.report_id}')">Dismiss</button>` : ''}
+              ${isPending && !isHidden && !isDeleted ? `<button class="btn-action btn-hide" onclick="hideRecipe('${r.recipe_id}')">Hide Recipe</button>` : ''}
+              ${isHidden && !isDeleted ? `<button class="btn-action btn-unhide" onclick="unhideRecipe('${r.recipe_id}')">Unhide Recipe</button>` : ''}
+              ${!isDeleted ? `<button class="btn-action btn-delete" onclick="deleteRecipe('${r.recipe_id}', '${esc(r.recipe_title)}')">Delete Recipe</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // XSS protection
+    function esc(str) {
+      if (!str) return '';
+      const el = document.createElement('span');
+      el.textContent = str;
+      return el.innerHTML;
+    }
+
+    // ---- Filter ----
+    window.setFilter = function(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.filter === filter);
+      });
+      renderReports();
+    };
+
+    // ---- Actions ----
+    window.dismissReport = async function(reportId) {
+      const data = await safeRpc('admin_dismiss_report', { p_report_id: reportId });
+      if (data !== null || data === undefined) {
+        showToast('Report dismissed');
+        await refreshReports();
+      }
+    };
+
+    window.hideRecipe = function(recipeId) {
+      openConfirm('Hide Recipe', 'This will hide the recipe from all public feeds. The owner can still see it. Continue?', async () => {
+        const data = await safeRpc('admin_hide_recipe', { p_recipe_id: recipeId });
+        if (data !== null || data === undefined) {
+          showToast('Recipe hidden');
+          await refreshReports();
+        }
+      });
+    };
+
+    window.unhideRecipe = async function(recipeId) {
+      const data = await safeRpc('admin_unhide_recipe', { p_recipe_id: recipeId });
+      if (data !== null || data === undefined) {
+        showToast('Recipe unhidden');
+        await refreshReports();
+      }
+    };
+
+    window.deleteRecipe = function(recipeId, title) {
+      openConfirm('Delete Recipe', `This will permanently soft-delete "${title}". Continue?`, async () => {
+        const data = await safeRpc('admin_delete_recipe', { p_recipe_id: recipeId });
+        if (data !== null || data === undefined) {
+          showToast('Recipe deleted');
+          await refreshReports();
+        }
+      });
+    };
+
+    async function refreshReports() {
+      const data = await safeRpc('admin_get_reports');
+      if (data !== null) {
+        allReports = data;
+        renderDashboard();
+      }
+    }
+
+    // ---- Init ----
+    async function init() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await checkAdminAndLoad();
+      } else {
+        showState('state-login');
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
