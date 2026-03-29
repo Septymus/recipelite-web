@@ -460,21 +460,22 @@
     });
 
     // ---- RPC helper ----
+    const RPC_ERROR = Symbol('rpc_error');
     async function safeRpc(fn, params = {}) {
       try {
         const { data, error } = await supabase.rpc(fn, params);
         if (error) {
           if (error.message && error.message.includes('Unauthorized')) {
             showState('state-not-admin');
-            return null;
+            return RPC_ERROR;
           }
           showToast(error.message || 'Operation failed', 'error');
-          return null;
+          return RPC_ERROR;
         }
-        return data;
+        return data; // null for void functions, array for queries
       } catch (e) {
         showToast('Connection error. Please try again.', 'error');
-        return null;
+        return RPC_ERROR;
       }
     }
 
@@ -509,8 +510,8 @@
     async function checkAdminAndLoad() {
       showState('state-loading');
       const data = await safeRpc('admin_get_reports');
-      if (data === null) return; // unauthorized or error — state already set
-      allReports = data;
+      if (data === RPC_ERROR) return; // unauthorized or error — state already set
+      allReports = data || [];
       renderDashboard();
       showState('state-dashboard');
     }
@@ -610,8 +611,8 @@
 
     // ---- Actions ----
     window.dismissReport = async function(reportId) {
-      const data = await safeRpc('admin_dismiss_report', { p_report_id: reportId });
-      if (data !== null || data === undefined) {
+      const result = await safeRpc('admin_dismiss_report', { p_report_id: reportId });
+      if (result !== RPC_ERROR) {
         showToast('Report dismissed');
         await refreshReports();
       }
@@ -619,8 +620,8 @@
 
     window.hideRecipe = function(recipeId) {
       openConfirm('Hide Recipe', 'This will hide the recipe from all public feeds. The owner can still see it. Continue?', async () => {
-        const data = await safeRpc('admin_hide_recipe', { p_recipe_id: recipeId });
-        if (data !== null || data === undefined) {
+        const result = await safeRpc('admin_hide_recipe', { p_recipe_id: recipeId });
+        if (result !== RPC_ERROR) {
           showToast('Recipe hidden');
           await refreshReports();
         }
@@ -628,8 +629,8 @@
     };
 
     window.unhideRecipe = async function(recipeId) {
-      const data = await safeRpc('admin_unhide_recipe', { p_recipe_id: recipeId });
-      if (data !== null || data === undefined) {
+      const result = await safeRpc('admin_unhide_recipe', { p_recipe_id: recipeId });
+      if (result !== RPC_ERROR) {
         showToast('Recipe unhidden');
         await refreshReports();
       }
@@ -637,8 +638,8 @@
 
     window.deleteRecipe = function(recipeId, title) {
       openConfirm('Delete Recipe', `This will permanently soft-delete "${title}". Continue?`, async () => {
-        const data = await safeRpc('admin_delete_recipe', { p_recipe_id: recipeId });
-        if (data !== null || data === undefined) {
+        const result = await safeRpc('admin_delete_recipe', { p_recipe_id: recipeId });
+        if (result !== RPC_ERROR) {
           showToast('Recipe deleted');
           await refreshReports();
         }
@@ -647,8 +648,8 @@
 
     async function refreshReports() {
       const data = await safeRpc('admin_get_reports');
-      if (data !== null) {
-        allReports = data;
+      if (data !== RPC_ERROR) {
+        allReports = data || [];
         renderDashboard();
       }
     }
