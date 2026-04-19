@@ -313,6 +313,139 @@
       cursor: pointer;
     }
 
+    /* Section tabs */
+    .section-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .section-tab {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: #A89688;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .section-tab.active {
+      background: #FF8C00;
+      color: #fff;
+    }
+    .section-tab:hover:not(.active) { background: #FFF3E0; color: #5D4037; }
+    .section-content { display: none; }
+    .section-content.active { display: block; }
+
+    /* Role management */
+    .role-search-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .role-search-bar input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid #E0D6CC;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      background: #fff;
+    }
+    .role-search-bar input:focus {
+      outline: none;
+      border-color: #FF8C00;
+    }
+    .role-search-bar button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      background: #FF8C00;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .role-search-bar button:hover { background: #E07B00; }
+    .user-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #F0E6DC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #A89688;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .user-info { flex: 1; min-width: 140px; }
+    .user-name { font-weight: 700; font-size: 14px; }
+    .user-disc { font-size: 12px; color: #A89688; }
+    .role-badge-free { color: #A89688; font-weight: 700; font-size: 12px; }
+    .role-badge-subscriber { color: #FF8C00; font-weight: 700; font-size: 12px; }
+    .role-badge-admin { color: #4E342E; font-weight: 700; font-size: 12px; }
+    .user-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .user-actions select {
+      padding: 6px 10px;
+      border: 1.5px solid #E0D6CC;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      background: #fff;
+      cursor: pointer;
+    }
+    .user-actions select:focus { outline: none; border-color: #FF8C00; }
+    .user-actions input[type="date"] {
+      padding: 6px 10px;
+      border: 1.5px solid #E0D6CC;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      background: #fff;
+    }
+    .user-actions input[type="date"]:focus { outline: none; border-color: #FF8C00; }
+    .btn-set-role {
+      padding: 6px 14px;
+      border: none;
+      border-radius: 8px;
+      background: #2E7D32;
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-set-role:hover { background: #256829; }
+    .btn-set-role:disabled { opacity: 0.5; cursor: not-allowed; }
+    .user-expires {
+      font-size: 11px;
+      color: #A89688;
+      margin-top: 2px;
+    }
+
     /* Access denied */
     .access-denied {
       text-align: center;
@@ -379,17 +512,39 @@
 
     <!-- Dashboard -->
     <div id="state-dashboard" class="state">
-      <div class="stats-bar" id="stats-bar"></div>
-      <div class="filter-tabs" id="filter-tabs">
-        <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">All</button>
-        <button class="filter-tab" data-filter="pending" onclick="setFilter('pending')">Pending</button>
-        <button class="filter-tab" data-filter="actioned" onclick="setFilter('actioned')">Actioned</button>
-        <button class="filter-tab" data-filter="dismissed" onclick="setFilter('dismissed')">Dismissed</button>
+      <!-- Section tabs -->
+      <div class="section-tabs">
+        <button class="section-tab active" onclick="switchSection('reports')">Reports</button>
+        <button class="section-tab" onclick="switchSection('roles')">User Roles</button>
       </div>
-      <div id="reports-list"></div>
-      <div id="empty-state" class="empty-state" style="display:none">
-        <div class="empty-state-icon">&#9745;</div>
-        <p>No reports found.</p>
+
+      <!-- Reports section -->
+      <div id="section-reports" class="section-content active">
+        <div class="stats-bar" id="stats-bar"></div>
+        <div class="filter-tabs" id="filter-tabs">
+          <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">All</button>
+          <button class="filter-tab" data-filter="pending" onclick="setFilter('pending')">Pending</button>
+          <button class="filter-tab" data-filter="actioned" onclick="setFilter('actioned')">Actioned</button>
+          <button class="filter-tab" data-filter="dismissed" onclick="setFilter('dismissed')">Dismissed</button>
+        </div>
+        <div id="reports-list"></div>
+        <div id="empty-state" class="empty-state" style="display:none">
+          <div class="empty-state-icon">&#9745;</div>
+          <p>No reports found.</p>
+        </div>
+      </div>
+
+      <!-- User Roles section -->
+      <div id="section-roles" class="section-content">
+        <div class="role-search-bar">
+          <input type="text" id="role-search-input" placeholder="Search by display name (min. 2 characters)" autocomplete="off">
+          <button onclick="searchUsersForRole()">Search</button>
+        </div>
+        <div id="role-users-list"></div>
+        <div id="role-empty" class="empty-state" style="display:none">
+          <div class="empty-state-icon">&#128100;</div>
+          <p>No users found.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -664,6 +819,148 @@
         renderDashboard();
       }
     }
+
+    // ---- Section switching ----
+    window.switchSection = function(section) {
+      document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+      document.querySelector(`.section-tab[onclick*="${section}"]`).classList.add('active');
+      document.getElementById(`section-${section}`).classList.add('active');
+    };
+
+    // ---- User Roles Management ----
+    let searchedUsers = [];
+
+    document.getElementById('role-search-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchUsersForRole();
+    });
+
+    window.searchUsersForRole = async function() {
+      const query = document.getElementById('role-search-input').value.trim();
+      if (query.length < 2) {
+        showToast('Enter at least 2 characters', 'error');
+        return;
+      }
+
+      const list = document.getElementById('role-users-list');
+      const empty = document.getElementById('role-empty');
+      list.innerHTML = '<div class="spinner"></div>';
+      empty.style.display = 'none';
+
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('id, display_name, discriminator, avatar_url, role, subscription_expires_at')
+          .ilike('display_name', `%${query}%`)
+          .order('display_name')
+          .limit(20);
+
+        if (error) {
+          showToast(error.message, 'error');
+          list.innerHTML = '';
+          return;
+        }
+
+        searchedUsers = data || [];
+        renderUserRoles();
+      } catch (e) {
+        showToast('Search failed', 'error');
+        list.innerHTML = '';
+      }
+    };
+
+    function renderUserRoles() {
+      const list = document.getElementById('role-users-list');
+      const empty = document.getElementById('role-empty');
+
+      if (searchedUsers.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = '';
+        return;
+      }
+      empty.style.display = 'none';
+
+      list.innerHTML = searchedUsers.map(u => {
+        const badgeClass = `role-badge-${u.role}`;
+        const roleLabel = u.role.charAt(0).toUpperCase() + u.role.slice(1);
+        const isAdmin = u.role === 'admin';
+        const expiresText = u.subscription_expires_at
+          ? new Date(u.subscription_expires_at).toLocaleDateString('sk-SK')
+          : '';
+
+        // Default expiry: 1 month from now
+        const defaultExpiry = new Date();
+        defaultExpiry.setMonth(defaultExpiry.getMonth() + 1);
+        const defaultExpiryStr = defaultExpiry.toISOString().split('T')[0];
+
+        return `
+          <div class="user-card" data-user-id="${u.id}">
+            <div class="user-avatar">
+              ${u.avatar_url
+                ? `<img src="${esc(u.avatar_url)}" alt="">`
+                : '&#128100;'}
+            </div>
+            <div class="user-info">
+              <div class="user-name">${esc(u.display_name)}<span class="user-disc">#${esc(u.discriminator)}</span></div>
+              <div class="${badgeClass}">${roleLabel}</div>
+              ${u.role === 'subscriber' && expiresText
+                ? `<div class="user-expires">Expires: ${expiresText}</div>`
+                : ''}
+            </div>
+            ${isAdmin ? '<div style="font-size:12px;color:#A89688;font-weight:600;">Admin — change in Supabase</div>' : `
+              <div class="user-actions">
+                <select id="role-select-${u.id}" onchange="toggleExpiryField('${u.id}')">
+                  <option value="free" ${u.role === 'free' ? 'selected' : ''}>Free</option>
+                  <option value="subscriber" ${u.role === 'subscriber' ? 'selected' : ''}>Subscriber</option>
+                </select>
+                <input type="date" id="role-expiry-${u.id}" value="${defaultExpiryStr}"
+                  style="${u.role !== 'subscriber' ? 'display:none;' : ''}">
+                <button class="btn-set-role" onclick="setUserRole('${u.id}', '${esc(u.display_name)}')">Set</button>
+              </div>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.toggleExpiryField = function(userId) {
+      const select = document.getElementById(`role-select-${userId}`);
+      const expiry = document.getElementById(`role-expiry-${userId}`);
+      if (expiry) {
+        expiry.style.display = select.value === 'subscriber' ? '' : 'none';
+      }
+    };
+
+    window.setUserRole = function(userId, displayName) {
+      const select = document.getElementById(`role-select-${userId}`);
+      const expiryInput = document.getElementById(`role-expiry-${userId}`);
+      const newRole = select.value;
+      const expiryDate = newRole === 'subscriber' && expiryInput.value
+        ? new Date(expiryInput.value).toISOString()
+        : null;
+
+      const roleLabel = newRole.charAt(0).toUpperCase() + newRole.slice(1);
+      const msg = newRole === 'subscriber'
+        ? `Set ${displayName} to Subscriber (expires ${expiryInput.value})?`
+        : `Set ${displayName} to Free?`;
+
+      openConfirm(`Change Role to ${roleLabel}`, msg, async () => {
+        const params = { p_user_id: userId, p_role: newRole };
+        if (expiryDate) params.p_expires_at = expiryDate;
+
+        const result = await safeRpc('admin_set_user_role', params);
+        if (result !== RPC_ERROR) {
+          showToast(`${displayName} is now ${roleLabel}`);
+          // Update local data
+          const user = searchedUsers.find(u => u.id === userId);
+          if (user) {
+            user.role = newRole;
+            user.subscription_expires_at = expiryDate;
+          }
+          renderUserRoles();
+        }
+      });
+    };
 
     // ---- Init ----
     async function init() {
