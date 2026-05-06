@@ -344,6 +344,83 @@
     .section-content { display: none; }
     .section-content.active { display: block; }
 
+    /* Sub-tabs (Recipe reports / User reports inside Reports section) */
+    .sub-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+      background: #FAF1E8;
+      border-radius: 10px;
+      padding: 3px;
+      max-width: 360px;
+    }
+    .sub-tab {
+      flex: 1;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: #A89688;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sub-tab.active { background: #fff; color: #4E342E; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .sub-tab:hover:not(.active) { color: #5D4037; }
+    .sub-content { display: none; }
+    .sub-content.active { display: block; }
+
+    /* Ban actions */
+    .btn-ban {
+      background: #CC3333;
+      color: #fff;
+      padding: 6px 14px;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-ban:hover { background: #B02929; }
+    .btn-unban {
+      background: #2E7D32;
+      color: #fff;
+      padding: 6px 14px;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-unban:hover { background: #256829; }
+    .badge-banned {
+      background: #FDECEC;
+      color: #CC3333;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-left: 6px;
+    }
+    /* Confirm dialog with reason input */
+    .modal-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1.5px solid #E0D6CC;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      margin-bottom: 16px;
+      resize: vertical;
+      min-height: 60px;
+    }
+    .modal-input:focus { outline: none; border-color: #FF8C00; }
+
     /* Role management */
     .role-search-bar {
       display: flex;
@@ -520,17 +597,42 @@
 
       <!-- Reports section -->
       <div id="section-reports" class="section-content active">
-        <div class="stats-bar" id="stats-bar"></div>
-        <div class="filter-tabs" id="filter-tabs">
-          <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">All</button>
-          <button class="filter-tab" data-filter="pending" onclick="setFilter('pending')">Pending</button>
-          <button class="filter-tab" data-filter="actioned" onclick="setFilter('actioned')">Actioned</button>
-          <button class="filter-tab" data-filter="dismissed" onclick="setFilter('dismissed')">Dismissed</button>
+        <!-- Sub-tabs: Recipe reports / User reports -->
+        <div class="sub-tabs">
+          <button class="sub-tab active" data-sub="recipes" onclick="switchReportSub('recipes')">Recipe reports</button>
+          <button class="sub-tab" data-sub="users" onclick="switchReportSub('users')">User reports</button>
         </div>
-        <div id="reports-list"></div>
-        <div id="empty-state" class="empty-state" style="display:none">
-          <div class="empty-state-icon">&#9745;</div>
-          <p>No reports found.</p>
+
+        <!-- Recipe reports sub-content (existing) -->
+        <div id="sub-recipes" class="sub-content active">
+          <div class="stats-bar" id="stats-bar"></div>
+          <div class="filter-tabs" id="filter-tabs">
+            <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">All</button>
+            <button class="filter-tab" data-filter="pending" onclick="setFilter('pending')">Pending</button>
+            <button class="filter-tab" data-filter="actioned" onclick="setFilter('actioned')">Actioned</button>
+            <button class="filter-tab" data-filter="dismissed" onclick="setFilter('dismissed')">Dismissed</button>
+          </div>
+          <div id="reports-list"></div>
+          <div id="empty-state" class="empty-state" style="display:none">
+            <div class="empty-state-icon">&#9745;</div>
+            <p>No reports found.</p>
+          </div>
+        </div>
+
+        <!-- User reports sub-content (new) -->
+        <div id="sub-users" class="sub-content">
+          <div class="stats-bar" id="user-stats-bar"></div>
+          <div class="filter-tabs" id="user-filter-tabs">
+            <button class="filter-tab active" data-user-filter="all" onclick="setUserFilter('all')">All</button>
+            <button class="filter-tab" data-user-filter="pending" onclick="setUserFilter('pending')">Pending</button>
+            <button class="filter-tab" data-user-filter="actioned" onclick="setUserFilter('actioned')">Actioned</button>
+            <button class="filter-tab" data-user-filter="dismissed" onclick="setUserFilter('dismissed')">Dismissed</button>
+          </div>
+          <div id="user-reports-list"></div>
+          <div id="user-empty-state" class="empty-state" style="display:none">
+            <div class="empty-state-icon">&#128100;</div>
+            <p>No user reports found.</p>
+          </div>
         </div>
       </div>
 
@@ -554,6 +656,7 @@
     <div class="modal-box">
       <h3 id="confirm-title"></h3>
       <p id="confirm-message"></p>
+      <textarea id="confirm-input" class="modal-input" placeholder="Reason (optional)" style="display:none"></textarea>
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
         <button class="btn-confirm-danger" id="confirm-ok">Confirm</button>
@@ -575,7 +678,9 @@
     );
 
     let allReports = [];
+    let allUserReports = [];
     let currentFilter = 'all';
+    let currentUserFilter = 'all';
 
     // ---- State management ----
     function showState(id) {
@@ -595,20 +700,31 @@
 
     // ---- Confirm dialog ----
     let confirmCallback = null;
-    function openConfirm(title, message, callback) {
+    function openConfirm(title, message, callback, options = {}) {
       document.getElementById('confirm-title').textContent = title;
       document.getElementById('confirm-message').textContent = message;
+      const input = document.getElementById('confirm-input');
+      if (options.withInput) {
+        input.style.display = '';
+        input.value = '';
+        input.placeholder = options.inputPlaceholder || 'Reason (optional)';
+      } else {
+        input.style.display = 'none';
+        input.value = '';
+      }
       confirmCallback = callback;
       document.getElementById('confirm-dialog').classList.add('open');
     }
     window.closeConfirm = function() {
       document.getElementById('confirm-dialog').classList.remove('open');
+      document.getElementById('confirm-input').style.display = 'none';
       confirmCallback = null;
     };
     document.getElementById('confirm-ok').addEventListener('click', async () => {
       if (confirmCallback) {
         document.getElementById('confirm-ok').disabled = true;
-        await confirmCallback();
+        const inputValue = document.getElementById('confirm-input').value.trim();
+        await confirmCallback(inputValue || null);
         document.getElementById('confirm-ok').disabled = false;
       }
       closeConfirm();
@@ -664,9 +780,15 @@
 
     async function checkAdminAndLoad() {
       showState('state-loading');
+      // Fetch recipe reports first — failure here means unauthorized.
       const data = await safeRpc('admin_get_reports');
       if (data === RPC_ERROR) return; // unauthorized or error — state already set
       allReports = data || [];
+
+      // User reports — separate RPC, may not exist on stale DB. Tolerate failure.
+      const userData = await safeRpc('admin_get_user_reports');
+      allUserReports = userData === RPC_ERROR ? [] : (userData || []);
+
       renderDashboard();
       showState('state-dashboard');
     }
@@ -675,6 +797,8 @@
     function renderDashboard() {
       renderStats();
       renderReports();
+      renderUserStats();
+      renderUserReports();
     }
 
     function renderStats() {
@@ -816,8 +940,12 @@
       const data = await safeRpc('admin_get_reports');
       if (data !== RPC_ERROR) {
         allReports = data || [];
-        renderDashboard();
       }
+      const userData = await safeRpc('admin_get_user_reports');
+      if (userData !== RPC_ERROR) {
+        allUserReports = userData || [];
+      }
+      renderDashboard();
     }
 
     // ---- Section switching ----
@@ -826,6 +954,144 @@
       document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
       document.querySelector(`.section-tab[onclick*="${section}"]`).classList.add('active');
       document.getElementById(`section-${section}`).classList.add('active');
+    };
+
+    window.switchReportSub = function(sub) {
+      document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.sub-content').forEach(s => s.classList.remove('active'));
+      document.querySelector(`.sub-tab[data-sub="${sub}"]`).classList.add('active');
+      document.getElementById(`sub-${sub}`).classList.add('active');
+    };
+
+    // ---- User Reports rendering ----
+    function renderUserStats() {
+      const total = allUserReports.length;
+      const pending = allUserReports.filter(r => r.status === 'pending').length;
+      const actioned = allUserReports.filter(r => r.status === 'actioned').length;
+      const dismissed = allUserReports.filter(r => r.status === 'dismissed').length;
+
+      document.getElementById('user-stats-bar').innerHTML = `
+        <div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Total</div></div>
+        <div class="stat-card pending"><div class="stat-number">${pending}</div><div class="stat-label">Pending</div></div>
+        <div class="stat-card actioned"><div class="stat-number">${actioned}</div><div class="stat-label">Actioned</div></div>
+        <div class="stat-card dismissed"><div class="stat-number">${dismissed}</div><div class="stat-label">Dismissed</div></div>
+      `;
+    }
+
+    window.setUserFilter = function(filter) {
+      currentUserFilter = filter;
+      document.querySelectorAll('#user-filter-tabs .filter-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.userFilter === filter);
+      });
+      renderUserReports();
+    };
+
+    function renderUserReports() {
+      const list = document.getElementById('user-reports-list');
+      const empty = document.getElementById('user-empty-state');
+      const filtered = currentUserFilter === 'all'
+        ? allUserReports
+        : allUserReports.filter(r => r.status === currentUserFilter);
+
+      if (filtered.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = '';
+        return;
+      }
+      empty.style.display = 'none';
+
+      const reasonLabels = {
+        inappropriate: 'Inappropriate content',
+        spam: 'Spam',
+        harassment: 'Harassment',
+        impersonation: 'Impersonation',
+        other: 'Other',
+      };
+
+      list.innerHTML = filtered.map(r => {
+        const badgeClass = `badge-${r.status}`;
+        const date = new Date(r.created_at).toLocaleDateString('sk-SK', {
+          day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        const isPending = r.status === 'pending';
+        const isBanned = r.reported_is_banned;
+        const banBadge = isBanned ? ' <span class="badge-banned">BANNED</span>' : '';
+        const pendingExtra = r.pending_count_for_reported > 1
+          ? ` <span class="report-count">(${r.pending_count_for_reported} pending reports)</span>`
+          : '';
+
+        return `
+          <div class="report-card" data-id="${r.id}">
+            <div class="report-header">
+              <div><span class="badge ${badgeClass}">${r.status}</span>${banBadge}</div>
+              <span class="report-date">${date}</span>
+            </div>
+            <div class="report-detail"><strong>Reported user:</strong> ${esc(r.reported_name)}#${esc(r.reported_discriminator)}${pendingExtra}</div>
+            <div class="report-detail"><strong>Reported by:</strong> ${esc(r.reporter_name)}#${esc(r.reporter_discriminator)}</div>
+            <div class="report-detail"><strong>Reason:</strong> ${reasonLabels[r.reason] || r.reason}</div>
+            ${r.description ? `<div class="report-detail"><span class="report-label">Description:</span> ${esc(r.description)}</div>` : ''}
+            <div class="report-actions">
+              ${isPending ? `<button class="btn-action btn-dismiss" onclick="dismissUserReport('${r.id}')">Dismiss</button>` : ''}
+              ${isPending && !isBanned ? `<button class="btn-action btn-ban" onclick="banReportedUser('${r.reported_id}', '${esc(r.reported_name)}')">Ban User</button>` : ''}
+              ${isBanned ? `<button class="btn-action btn-unban" onclick="unbanReportedUser('${r.reported_id}', '${esc(r.reported_name)}')">Unban User</button>` : ''}
+              <button class="btn-action btn-delete" onclick="deleteUserReport('${r.id}')">Delete Report</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ---- User report actions ----
+    window.dismissUserReport = async function(reportId) {
+      const result = await safeRpc('admin_dismiss_user_report', { p_report_id: reportId });
+      if (result !== RPC_ERROR) {
+        showToast('Report dismissed');
+        await refreshReports();
+      }
+    };
+
+    window.deleteUserReport = function(reportId) {
+      openConfirm('Delete Report', 'This will permanently delete this user report. Continue?', async () => {
+        const result = await safeRpc('admin_delete_user_report', { p_report_id: reportId });
+        if (result !== RPC_ERROR) {
+          showToast('Report deleted');
+          await refreshReports();
+        }
+      });
+    };
+
+    window.banReportedUser = function(userId, displayName) {
+      openConfirm(
+        'Ban User',
+        `This will disable login for ${displayName}, hide all their content, and mark all pending reports against them as actioned. Continue?`,
+        async (reason) => {
+          const params = { p_user_id: userId };
+          if (reason) params.p_reason = reason;
+          const result = await safeRpc('admin_ban_user', params);
+          if (result !== RPC_ERROR) {
+            showToast(`${displayName} banned`);
+            await refreshReports();
+            // Refresh User Roles search if it was open and contained this user.
+            if (searchedUsers.some(u => u.id === userId)) await searchUsersForRole();
+          }
+        },
+        { withInput: true, inputPlaceholder: 'Reason (optional, visible to admins only)' }
+      );
+    };
+
+    window.unbanReportedUser = function(userId, displayName) {
+      openConfirm(
+        'Unban User',
+        `This will restore login and content visibility for ${displayName}. Continue?`,
+        async () => {
+          const result = await safeRpc('admin_unban_user', { p_user_id: userId });
+          if (result !== RPC_ERROR) {
+            showToast(`${displayName} unbanned`);
+            await refreshReports();
+            if (searchedUsers.some(u => u.id === userId)) await searchUsersForRole();
+          }
+        }
+      );
     };
 
     // ---- User Roles Management ----
@@ -847,26 +1113,15 @@
       list.innerHTML = '<div class="spinner"></div>';
       empty.style.display = 'none';
 
-      try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('id, display_name, discriminator, avatar_url, role, subscription_expires_at')
-          .ilike('display_name', `%${query}%`)
-          .order('display_name')
-          .limit(20);
-
-        if (error) {
-          showToast(error.message, 'error');
-          list.innerHTML = '';
-          return;
-        }
-
-        searchedUsers = data || [];
-        renderUserRoles();
-      } catch (e) {
-        showToast('Search failed', 'error');
+      // Use admin RPC — returns is_banned + banned_at + banned_reason for badge.
+      // Falls back to direct profiles query if RPC unavailable (stale DB).
+      const data = await safeRpc('admin_search_users', { query_text: query });
+      if (data === RPC_ERROR) {
         list.innerHTML = '';
+        return;
       }
+      searchedUsers = data || [];
+      renderUserRoles();
     };
 
     function renderUserRoles() {
@@ -884,8 +1139,13 @@
         const badgeClass = `role-badge-${u.role}`;
         const roleLabel = u.role.charAt(0).toUpperCase() + u.role.slice(1);
         const isAdmin = u.role === 'admin';
+        const isBanned = !!u.is_banned;
         const expiresText = u.subscription_expires_at
           ? new Date(u.subscription_expires_at).toLocaleDateString('sk-SK')
+          : '';
+        const banBadge = isBanned ? ' <span class="badge-banned">BANNED</span>' : '';
+        const bannedReason = isBanned && u.banned_reason
+          ? `<div class="user-expires" style="color:#CC3333;">Reason: ${esc(u.banned_reason)}</div>`
           : '';
 
         // Default expiry: 1 month from now
@@ -901,21 +1161,25 @@
                 : '&#128100;'}
             </div>
             <div class="user-info">
-              <div class="user-name">${esc(u.display_name)}<span class="user-disc">#${esc(u.discriminator)}</span></div>
+              <div class="user-name">${esc(u.display_name)}<span class="user-disc">#${esc(u.discriminator)}</span>${banBadge}</div>
               <div class="${badgeClass}">${roleLabel}</div>
               ${u.role === 'subscriber' && expiresText
                 ? `<div class="user-expires">Expires: ${expiresText}</div>`
                 : ''}
+              ${bannedReason}
             </div>
             ${isAdmin ? '<div style="font-size:12px;color:#A89688;font-weight:600;">Admin — change in Supabase</div>' : `
               <div class="user-actions">
-                <select id="role-select-${u.id}" onchange="toggleExpiryField('${u.id}')">
+                <select id="role-select-${u.id}" onchange="toggleExpiryField('${u.id}')" ${isBanned ? 'disabled' : ''}>
                   <option value="free" ${u.role === 'free' ? 'selected' : ''}>Free</option>
                   <option value="subscriber" ${u.role === 'subscriber' ? 'selected' : ''}>Subscriber</option>
                 </select>
                 <input type="date" id="role-expiry-${u.id}" value="${defaultExpiryStr}"
-                  style="${u.role !== 'subscriber' ? 'display:none;' : ''}">
-                <button class="btn-set-role" onclick="setUserRole('${u.id}', '${esc(u.display_name)}')">Set</button>
+                  style="${u.role !== 'subscriber' ? 'display:none;' : ''}" ${isBanned ? 'disabled' : ''}>
+                <button class="btn-set-role" onclick="setUserRole('${u.id}', '${esc(u.display_name)}')" ${isBanned ? 'disabled' : ''}>Set</button>
+                ${isBanned
+                  ? `<button class="btn-unban" onclick="unbanReportedUser('${u.id}', '${esc(u.display_name)}')">Unban</button>`
+                  : `<button class="btn-ban" onclick="banReportedUser('${u.id}', '${esc(u.display_name)}')">Ban</button>`}
               </div>
             `}
           </div>
