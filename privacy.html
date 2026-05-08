@@ -151,7 +151,7 @@
     </div>
     <div class="body" id="content-sk">
       <h1>Zásady ochrany osobných údajov</h1>
-      <p class="last-updated">Posledná aktualizácia: 29. marca 2026</p>
+      <p class="last-updated">Posledná aktualizácia: 8. mája 2026</p>
 
       <p>Tieto zásady vysvetľujú, ako mobilná aplikácia <strong>RecipeLite</strong> (ďalej „aplikácia" alebo „my") zhromažďuje, používa a chráni vaše osobné údaje v súlade s Nariadením (EÚ) 2016/679 (GDPR) a zákonom č. 18/2018 Z. z. o ochrane osobných údajov.</p>
 
@@ -165,26 +165,30 @@
       <h2>2. Aké údaje zhromažďujeme</h2>
       <table>
         <tr><th>Kategória</th><th>Údaje</th><th>Účel</th></tr>
-        <tr><td>Účet</td><td>Email, používateľské meno, heslo (hashované)</td><td>Registrácia a prihlásenie</td></tr>
+        <tr><td>Účet</td><td>Email, používateľské meno, heslo (hashované), discriminator (#1234)</td><td>Registrácia a prihlásenie, jedinečná identifikácia</td></tr>
         <tr><td>Profil</td><td>Zobrazované meno, bio, profilová fotka</td><td>Personalizácia profilu</td></tr>
-        <tr><td>Obsah</td><td>Recepty (názov, popis, ingrediencie, postup, fotky), nákupné zoznamy</td><td>Hlavná funkcionalita aplikácie</td></tr>
+        <tr><td>Obsah</td><td>Recepty (názov, popis, ingrediencie, postup, fotky, video URL, poznámky), nákupné zoznamy, domácnosti</td><td>Hlavná funkcionalita aplikácie</td></tr>
         <tr><td>Sociálne</td><td>Sledovania (follow), členstvo v domácnostiach, obľúbené recepty</td><td>Sociálne funkcie</td></tr>
-        <tr><td>Technické</td><td>Jazyk zariadenia (SK/EN)</td><td>Lokalizácia emailov</td></tr>
+        <tr><td>Moderácia</td><td>Záznamy o blokovaní iných používateľov, hlásenia receptov a používateľov (dôvod, dátum, stav riešenia), údaje o admin bane (dátum, dôvod)</td><td>Bezpečnosť komunity, moderácia obsahu</td></tr>
+        <tr><td>Predplatné</td><td>Rola používateľa (free/subscriber/admin), dátum expirácie predplatného</td><td>Správa prístupu k pokročilým funkciám (AI import, OCR)</td></tr>
+        <tr><td>AI použitie</td><td>Počet a typ AI dotazov (import, OCR), časové pečiatky</td><td>Rate limiting (ochrana pred zneužitím)</td></tr>
+        <tr><td>Technické</td><td>Jazyk zariadenia (SK/EN), IP adresa, user agent (logované Supabase pri autentifikácii)</td><td>Lokalizácia, bezpečnosť autentifikácie</td></tr>
       </table>
-      <p><strong>Nezhromažďujeme:</strong> polohu, kontakty, históriu prehliadania, analytické dáta tretích strán, ani žiadne údaje na reklamné účely.</p>
+      <p><strong>Nezhromažďujeme:</strong> polohu, kontakty, históriu prehliadania, analytické dáta tretích strán, reklamné identifikátory, ani žiadne údaje na reklamné účely.</p>
 
       <h2>3. Právny základ spracovania</h2>
       <ul>
         <li><strong>Plnenie zmluvy</strong> (čl. 6 ods. 1 písm. b) GDPR) — spracovanie potrebné na poskytovanie služieb aplikácie (účet, recepty, nákupné zoznamy, domácnosti).</li>
         <li><strong>Súhlas</strong> (čl. 6 ods. 1 písm. a) GDPR) — udelený pri registrácii zaškrtnutím súhlasu s podmienkami. Súhlas môžete kedykoľvek odvolať zmazaním účtu.</li>
+        <li><strong>Oprávnený záujem</strong> (čl. 6 ods. 1 písm. f) GDPR) — moderácia komunity, prevencia zneužitia (rate limiting, hlásenia, blokovanie, ban).</li>
       </ul>
 
       <h2>4. Sprostredkovatelia (procesory)</h2>
       <p>Na poskytovanie služieb využívame nasledujúcich sprostredkovateľov:</p>
       <table>
         <tr><th>Sprostredkovateľ</th><th>Účel</th><th>Sídlo</th></tr>
-        <tr><td>Supabase Inc.</td><td>Backend, databáza, autentifikácia, úložisko súborov</td><td>USA (EU región pre dáta)</td></tr>
-        <tr><td>Resend Inc.</td><td>Odosielanie transakčných emailov (overenie účtu, reset hesla)</td><td>USA</td></tr>
+        <tr><td>Supabase Inc.</td><td>Backend, databáza, autentifikácia, úložisko súborov, edge functions</td><td>USA (EU región pre dáta)</td></tr>
+        <tr><td>Resend Inc.</td><td>Odosielanie transakčných emailov (potvrdenie účtu, reset hesla, zmena emailu)</td><td>USA</td></tr>
         <tr><td>Anthropic PBC</td><td>AI spracovanie textu — import receptov z URL a extrakcia textu z fotografií (OCR)</td><td>USA</td></tr>
       </table>
       <p>Všetci sprostredkovatelia spĺňajú požiadavky GDPR a spracúvajú údaje na základe štandardných zmluvných doložiek (SCC).</p>
@@ -195,8 +199,13 @@
       <h2>6. Doba uchovávania</h2>
       <ul>
         <li><strong>Aktívny účet:</strong> údaje uchovávame po celú dobu existencie vášho účtu.</li>
-        <li><strong>Zmazané recepty:</strong> presunuté do koša, po manuálnom trvalnom zmazaní sú nezvratne odstránené.</li>
-        <li><strong>Zmazaný účet:</strong> všetky údaje sú vymazané okamžite a nenávratne (kaskádové mazanie).</li>
+        <li><strong>Zmazané recepty:</strong> presunuté do koša, po manuálnom trvalom zmazaní sú nezvratne odstránené.</li>
+        <li><strong>Zmazaný účet:</strong> všetky údaje sú vymazané okamžite a nenávratne (kaskádové mazanie). Detailný postup nájdete na <a href="https://recipelite.sk/account-deletion">recipelite.sk/account-deletion</a>.</li>
+        <li><strong>Hlásenia (recepty / používatelia):</strong> uchovávame trvale pre účely auditingu a prevencie opakovaného porušenia (po vyriešení sa stav zmení na „dismissed" alebo „actioned").</li>
+        <li><strong>Záznamy o blokovaní:</strong> existujú kým iného používateľa neodblokujete alebo nezmažete účet.</li>
+        <li><strong>Záznamy o admin bane:</strong> existujú kým administrátor nezruší ban, alebo používateľ nezmaže účet (cascade delete).</li>
+        <li><strong>AI usage logy:</strong> uchovávame 24 hodín pre rate limiting (potom automaticky odstraňované).</li>
+        <li><strong>Auth logy (IP, user agent):</strong> podľa retenčnej politiky Supabase (typicky 30 dní).</li>
       </ul>
 
       <h2>7. Vaše práva</h2>
@@ -204,9 +213,10 @@
       <ul>
         <li><strong>Prístup</strong> — k vašim osobným údajom (export dát v Nastaveniach aplikácie).</li>
         <li><strong>Opravu</strong> — úprava profilu a receptov priamo v aplikácii.</li>
-        <li><strong>Vymazanie</strong> — zmazanie účtu v Nastaveniach profilu (okamžité a nenávratné).</li>
+        <li><strong>Vymazanie</strong> — zmazanie účtu v Nastaveniach profilu (okamžité a nenávratné). Detailný postup: <a href="https://recipelite.sk/account-deletion">recipelite.sk/account-deletion</a>.</li>
         <li><strong>Prenosnosť</strong> — export všetkých dát vo formáte JSON (Nastavenia → Export mojich dát).</li>
         <li><strong>Odvolanie súhlasu</strong> — kedykoľvek zmazaním účtu.</li>
+        <li><strong>Námietku</strong> — proti spracovaniu na základe oprávneného záujmu (moderácia) — kontaktujte info@recipelite.sk.</li>
         <li><strong>Podanie sťažnosti</strong> — na dozorný orgán (viď nižšie).</li>
       </ul>
 
@@ -216,24 +226,55 @@
       <h2>9. Bezpečnosť</h2>
       <p>Vaše údaje chránime pomocou:</p>
       <ul>
-        <li>Šifrovania prenosu (HTTPS/TLS)</li>
-        <li>Hashovania hesiel (bcrypt)</li>
-        <li>Row-Level Security (RLS) politík v databáze</li>
-        <li>JWT autentifikácie s automatickou obnovou tokenov</li>
+        <li>Šifrovania prenosu (HTTPS/TLS na všetkých rozhraniach).</li>
+        <li>Hashovania hesiel (bcrypt).</li>
+        <li>Row-Level Security (RLS) politík v databáze.</li>
+        <li>JWT autentifikácie s automatickou obnovou tokenov.</li>
+        <li>Šifrované úložisko súborov (Supabase Storage).</li>
       </ul>
 
-      <h2>10. Automatizované rozhodovanie a AI</h2>
+      <h2>10. Moderácia a bezpečnosť komunity</h2>
+      <p>Aplikácia obsahuje sociálne funkcie (verejné recepty, profily, sledovania), preto využívame nasledujúce mechanizmy na ochranu komunity:</p>
+
+      <h3>10.1 Nahlasovanie obsahu a používateľov</h3>
+      <ul>
+        <li>Môžete nahlásiť verejný recept (4 dôvody: nevhodný obsah, spam, autorské práva, iné).</li>
+        <li>Môžete nahlásiť používateľa (5 dôvodov: nevhodný obsah, spam, obťažovanie, vydávanie sa za inú osobu, iné).</li>
+        <li>Pri nahlásení sa ukladá: vaše ID, ID nahláseného (recept/používateľ), dôvod, voliteľný popis, časová pečiatka, stav riešenia.</li>
+        <li>Hlásenia sú prístupné výlučne administrátorom (vyhradený admin panel na <a href="https://recipelite.sk/admin">recipelite.sk/admin</a>).</li>
+      </ul>
+
+      <h3>10.2 Blokovanie používateľov</h3>
+      <ul>
+        <li>Môžete blokovať iných používateľov (Profil → menu → Blokovať).</li>
+        <li>Pri blokovaní sa ukladá: vaše ID, ID blokovaného, časová pečiatka.</li>
+        <li>Po blokovaní sa vám vzájomne nezobrazujú recepty a obojstranné sledovania (follows) sa odstránia.</li>
+        <li>Zoznam blokovaných je viditeľný iba vám (Nastavenia → Blokovaní používatelia).</li>
+        <li>Blokovanie môžete kedykoľvek zrušiť — sledovania sa pri odblokovaní automaticky neobnovujú.</li>
+      </ul>
+
+      <h3>10.3 Administrátorská moderácia</h3>
+      <ul>
+        <li>Administrátori môžu skrývať alebo mazať recepty porušujúce pravidlá.</li>
+        <li>Administrátori môžu pozastaviť účet (ban) v prípade opakovaného porušenia.</li>
+        <li>Pri bane sa ukladá: časová pečiatka, dôvod, ID administrátora.</li>
+        <li>Banovaní používatelia stratia prístup k aplikácii (Supabase auth.users.banned_until).</li>
+        <li>Proti banu môžete podať odvolanie kontaktovaním <a href="mailto:info@recipelite.sk">info@recipelite.sk</a>.</li>
+      </ul>
+
+      <h2>11. Automatizované rozhodovanie a AI</h2>
       <p>Aplikácia využíva AI službu Claude od spoločnosti Anthropic PBC na tieto účely:</p>
       <ul>
         <li><strong>Import receptov</strong> — extrakcia štruktúrovaného receptu z obsahu webovej stránky (URL adresa zadaná používateľom).</li>
         <li><strong>OCR skenovanie</strong> — extrakcia textu z fotografií receptov (obrázok zvolený používateľom).</li>
       </ul>
       <p>Do AI služby sa odosielajú <strong>výlučne</strong> dáta potrebné na spracovanie (obsah webovej stránky alebo obrázok). Vaše osobné údaje (meno, email, profil) nie sú súčasťou týchto požiadaviek. Anthropic dáta neuchováva na tréningové účely a spracúva ich výlučne na účel poskytnutia odpovede.</p>
+      <p>Pre používateľov bez aktívneho predplatného platí limit 2 AI použití za hodinu (kombinácia importov a OCR). Tento limit chráni systém pred zneužitím a kontroluje sa cez záznamy v internej tabuľke <code>ai_usage_log</code>.</p>
 
-      <h2>11. Zmeny zásad</h2>
+      <h2>12. Zmeny zásad</h2>
       <p>O významných zmenách vás budeme informovať prostredníctvom oznámenia v aplikácii. Aktuálna verzia je vždy dostupná na <a href="https://recipelite.sk/privacy">recipelite.sk/privacy</a>.</p>
 
-      <h2>12. Dozorný orgán</h2>
+      <h2>13. Dozorný orgán</h2>
       <div class="highlight">
         <p><strong>Úrad na ochranu osobných údajov Slovenskej republiky</strong><br>
         Hraničná 12, 820 07 Bratislava 27<br>
@@ -241,14 +282,14 @@
         Email: statny.dozor@pdp.gov.sk</p>
       </div>
 
-      <h2>13. Kontakt</h2>
+      <h2>14. Kontakt</h2>
       <p>Ak máte otázky ohľadom spracovania vašich osobných údajov, kontaktujte nás na <a href="mailto:info@recipelite.sk">info@recipelite.sk</a>.</p>
     </div>
 
     <!-- English version -->
     <div class="body" id="content-en" style="display:none">
       <h1>Privacy Policy</h1>
-      <p class="last-updated">Last updated: March 29, 2026</p>
+      <p class="last-updated">Last updated: May 8, 2026</p>
 
       <p>This policy explains how the mobile application <strong>RecipeLite</strong> (hereinafter "app" or "we") collects, uses, and protects your personal data in accordance with Regulation (EU) 2016/679 (GDPR) and Slovak Act No. 18/2018 Coll. on Personal Data Protection.</p>
 
@@ -262,26 +303,30 @@
       <h2>2. What Data We Collect</h2>
       <table>
         <tr><th>Category</th><th>Data</th><th>Purpose</th></tr>
-        <tr><td>Account</td><td>Email, username, password (hashed)</td><td>Registration and login</td></tr>
+        <tr><td>Account</td><td>Email, username, password (hashed), discriminator (#1234)</td><td>Registration and login, unique identification</td></tr>
         <tr><td>Profile</td><td>Display name, bio, profile picture</td><td>Profile personalization</td></tr>
-        <tr><td>Content</td><td>Recipes (title, description, ingredients, steps, photos), shopping lists</td><td>Core app functionality</td></tr>
+        <tr><td>Content</td><td>Recipes (title, description, ingredients, steps, photos, video URL, notes), shopping lists, households</td><td>Core app functionality</td></tr>
         <tr><td>Social</td><td>Follows, household memberships, favorite recipes</td><td>Social features</td></tr>
-        <tr><td>Technical</td><td>Device language (SK/EN)</td><td>Email localization</td></tr>
+        <tr><td>Moderation</td><td>Records of blocking other users, recipe and user reports (reason, date, resolution status), admin ban data (date, reason)</td><td>Community safety, content moderation</td></tr>
+        <tr><td>Subscription</td><td>User role (free/subscriber/admin), subscription expiration date</td><td>Access management for advanced features (AI import, OCR)</td></tr>
+        <tr><td>AI usage</td><td>Number and type of AI requests (import, OCR), timestamps</td><td>Rate limiting (abuse prevention)</td></tr>
+        <tr><td>Technical</td><td>Device language (SK/EN), IP address, user agent (logged by Supabase during authentication)</td><td>Localization, authentication security</td></tr>
       </table>
-      <p><strong>We do not collect:</strong> location data, contacts, browsing history, third-party analytics, or any data for advertising purposes.</p>
+      <p><strong>We do not collect:</strong> location data, contacts, browsing history, third-party analytics, advertising identifiers, or any data for advertising purposes.</p>
 
       <h2>3. Legal Basis for Processing</h2>
       <ul>
         <li><strong>Performance of a contract</strong> (Art. 6(1)(b) GDPR) — processing necessary to provide app services (account, recipes, shopping lists, households).</li>
         <li><strong>Consent</strong> (Art. 6(1)(a) GDPR) — given during registration by accepting the terms. You can withdraw consent at any time by deleting your account.</li>
+        <li><strong>Legitimate interest</strong> (Art. 6(1)(f) GDPR) — community moderation, abuse prevention (rate limiting, reports, blocking, ban).</li>
       </ul>
 
       <h2>4. Data Processors</h2>
       <p>We use the following processors to provide our services:</p>
       <table>
         <tr><th>Processor</th><th>Purpose</th><th>Location</th></tr>
-        <tr><td>Supabase Inc.</td><td>Backend, database, authentication, file storage</td><td>USA (EU region for data)</td></tr>
-        <tr><td>Resend Inc.</td><td>Transactional emails (account verification, password reset)</td><td>USA</td></tr>
+        <tr><td>Supabase Inc.</td><td>Backend, database, authentication, file storage, edge functions</td><td>USA (EU region for data)</td></tr>
+        <tr><td>Resend Inc.</td><td>Transactional emails (account verification, password reset, email change)</td><td>USA</td></tr>
         <tr><td>Anthropic PBC</td><td>AI text processing — recipe import from URLs and text extraction from photos (OCR)</td><td>USA</td></tr>
       </table>
       <p>All processors comply with GDPR requirements and process data based on Standard Contractual Clauses (SCCs).</p>
@@ -293,7 +338,12 @@
       <ul>
         <li><strong>Active account:</strong> data is retained for the duration of your account.</li>
         <li><strong>Deleted recipes:</strong> moved to trash; permanently deleted upon manual confirmation.</li>
-        <li><strong>Deleted account:</strong> all data is immediately and irreversibly deleted (cascade deletion).</li>
+        <li><strong>Deleted account:</strong> all data is immediately and irreversibly deleted (cascade deletion). Detailed procedure: <a href="https://recipelite.sk/account-deletion">recipelite.sk/account-deletion</a>.</li>
+        <li><strong>Reports (recipes / users):</strong> retained permanently for auditing and prevention of repeat violations (after resolution, status changes to "dismissed" or "actioned").</li>
+        <li><strong>Block records:</strong> exist until you unblock the user or delete your account.</li>
+        <li><strong>Ban records:</strong> exist until administrator lifts the ban or user deletes the account (cascade delete).</li>
+        <li><strong>AI usage logs:</strong> retained for 24 hours for rate limiting (then automatically deleted).</li>
+        <li><strong>Auth logs (IP, user agent):</strong> per Supabase retention policy (typically 30 days).</li>
       </ul>
 
       <h2>7. Your Rights</h2>
@@ -301,9 +351,10 @@
       <ul>
         <li><strong>Access</strong> — your personal data (data export in app Settings).</li>
         <li><strong>Rectification</strong> — edit your profile and recipes directly in the app.</li>
-        <li><strong>Erasure</strong> — delete your account in Profile Settings (immediate and irreversible).</li>
+        <li><strong>Erasure</strong> — delete your account in Profile Settings (immediate and irreversible). Detailed procedure: <a href="https://recipelite.sk/account-deletion">recipelite.sk/account-deletion</a>.</li>
         <li><strong>Data portability</strong> — export all data in JSON format (Settings → Export my data).</li>
         <li><strong>Withdraw consent</strong> — at any time by deleting your account.</li>
+        <li><strong>Object</strong> — to processing based on legitimate interest (moderation) — contact info@recipelite.sk.</li>
         <li><strong>Lodge a complaint</strong> — with the supervisory authority (see below).</li>
       </ul>
 
@@ -313,24 +364,55 @@
       <h2>9. Security</h2>
       <p>We protect your data through:</p>
       <ul>
-        <li>Transport encryption (HTTPS/TLS)</li>
-        <li>Password hashing (bcrypt)</li>
-        <li>Row-Level Security (RLS) database policies</li>
-        <li>JWT authentication with automatic token refresh</li>
+        <li>Transport encryption (HTTPS/TLS on all interfaces).</li>
+        <li>Password hashing (bcrypt).</li>
+        <li>Row-Level Security (RLS) database policies.</li>
+        <li>JWT authentication with automatic token refresh.</li>
+        <li>Encrypted file storage (Supabase Storage).</li>
       </ul>
 
-      <h2>10. Automated Decision-Making and AI</h2>
+      <h2>10. Community Moderation and Safety</h2>
+      <p>The app contains social features (public recipes, profiles, follows), therefore we use the following mechanisms to protect the community:</p>
+
+      <h3>10.1 Reporting Content and Users</h3>
+      <ul>
+        <li>You can report a public recipe (4 reasons: inappropriate content, spam, copyright, other).</li>
+        <li>You can report a user (5 reasons: inappropriate content, spam, harassment, impersonation, other).</li>
+        <li>When reporting, we store: your ID, ID of the reported entity (recipe/user), reason, optional description, timestamp, resolution status.</li>
+        <li>Reports are accessible only to administrators (dedicated admin panel at <a href="https://recipelite.sk/admin">recipelite.sk/admin</a>).</li>
+      </ul>
+
+      <h3>10.2 Blocking Users</h3>
+      <ul>
+        <li>You can block other users (Profile → menu → Block).</li>
+        <li>When blocking, we store: your ID, blocked user's ID, timestamp.</li>
+        <li>After blocking, your recipes are mutually hidden and follows in both directions are removed.</li>
+        <li>Your block list is visible only to you (Settings → Blocked Users).</li>
+        <li>You can unblock at any time — follows are not automatically restored after unblocking.</li>
+      </ul>
+
+      <h3>10.3 Administrative Moderation</h3>
+      <ul>
+        <li>Administrators may hide or delete recipes violating rules.</li>
+        <li>Administrators may suspend accounts (ban) for repeated violations.</li>
+        <li>When banning, we store: timestamp, reason, administrator's ID.</li>
+        <li>Banned users lose access to the app (Supabase auth.users.banned_until).</li>
+        <li>You may appeal a ban by contacting <a href="mailto:info@recipelite.sk">info@recipelite.sk</a>.</li>
+      </ul>
+
+      <h2>11. Automated Decision-Making and AI</h2>
       <p>The app uses the AI service Claude by Anthropic PBC for the following purposes:</p>
       <ul>
         <li><strong>Recipe import</strong> — extracting a structured recipe from a webpage's content (URL provided by the user).</li>
         <li><strong>OCR scanning</strong> — extracting text from recipe photos (image selected by the user).</li>
       </ul>
       <p>Only data necessary for processing is sent to the AI service (webpage content or image). Your personal data (name, email, profile) is not included in these requests. Anthropic does not retain data for training purposes and processes it solely to provide the response.</p>
+      <p>For users without an active subscription, a limit of 2 AI uses per hour applies (combined imports and OCR). This limit protects the system against abuse and is enforced via records in the internal <code>ai_usage_log</code> table.</p>
 
-      <h2>11. Policy Changes</h2>
+      <h2>12. Policy Changes</h2>
       <p>We will notify you of significant changes via an in-app notification. The current version is always available at <a href="https://recipelite.sk/privacy">recipelite.sk/privacy</a>.</p>
 
-      <h2>12. Supervisory Authority</h2>
+      <h2>13. Supervisory Authority</h2>
       <div class="highlight">
         <p><strong>Office for Personal Data Protection of the Slovak Republic</strong><br>
         Hraničná 12, 820 07 Bratislava 27<br>
@@ -338,7 +420,7 @@
         Email: statny.dozor@pdp.gov.sk</p>
       </div>
 
-      <h2>13. Contact</h2>
+      <h2>14. Contact</h2>
       <p>If you have questions regarding the processing of your personal data, contact us at <a href="mailto:info@recipelite.sk">info@recipelite.sk</a>.</p>
     </div>
 
